@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    ViewData["Page"] = "Index";
+}
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+        let imageDisplay1 = document.getElementById("image-display-1");
+        let imageDisplay2 = document.getElementById("image-display-2");
+
+        let frames = ["../images/slide-show/background1.jpg", "../images/slide-show/background2.jpg", "../images/slide-show/background3.jpg", "../images/slide-show/background4.png"];
+
+        imageDisplay1.style.backgroundImage = "url('" + frames[0] + "')";
+        playSlideShow(imageDisplay1, imageDisplay2, frames, 8000, true);
+
+
+    </script>
+}
+
+<div id="image-display-1" style="width: 100vw; height: calc(100vh - 57px - 61px); position: absolute; z-index: 1; background-repeat: no-repeat; background-size: cover">
+
+</div>
+
+<div id="image-display-2" style="width: 100vw; height: calc(100vh - 57px - 61px); position: absolute; z-index: 2; background-repeat: no-repeat; background-size: cover">
+
+</div>
+
+<div style="width: 100vw; height: calc(100vh - 57px - 61px); position: absolute; z-index: 3; background-repeat: repeat; background-size: cover; background-image: url('../images/particles.gif'); background-size: 10%; opacity: 0.2;">
+
+
+</div>
+
+<div style="position: absolute; z-index: 4; width: 100%; margin-top: 1rem">
+    <div align="center">
+        <div style="width: 600px; background-color: white; border-radius: 16px">
+        <div style="width: 500px; padding-top: 24px; padding-bottom: 16px">
+            <h1 class="display-4 AEC_HEADING1">Agri-Energy Connect</h1>
+            <p>A place for anyone such as farmers, green-energy experts and enthusiasts to collaborate, share resources and innovate in the realms of sustainable agriculture and renewable energy.</p>
+            <a href="/User/Login">Login Now</a>
+        </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    ViewData["Page"] = "Login";
+}
+
+
+@section Styles {
+
+    <style type="text/css">
+
+
+        .content {
+            color: #f0f0f0;
+        }
+
+        a {
+            color: #e2c072;
+        }
+
+        .text-field {
+            background-color: #2a2a2a;
+            color: white;
+            border-radius: 8px;
+            height: 41px;
+        }
+
+        #background {
+            background-image: url('../images/pattern2.png');
+        }
+
+    </style>
+}
+
+@section Scripts {
+
+    <script type="text/javascript">
+    
+        function UserLogin()
+        {
+            let userName = document.getElementById("txtUserName").value;
+            let password = document.getElementById("txtPassword").value;
+
+            let validation = userName.length > 0 && password.length > 0;
+
+            if(validation)
+            {
+                let json_obj = new Object();
+                json_obj.UserName = userName;
+                json_obj.Password = password;
+
+                POST("/User/Login", JSON.stringify(json_obj), null, null);
+            }
+        }
+        
+    </script>
+
+}
+
+<div style="margin-top: 16px;">
+<div class="content">
+<h1>Authenticate with Agri-Energy Connect</h1>
+<table style="margin-top: 32px">
+    <tr>
+        <td style="vertical-align: top">
+            Enter your login details to continue with the Agri-Energy Connect platform or <a href="/Home/Register">create your user account here</a>
+            <br />
+            <br />
+
+            <div style="width: fit-content">
+            <table cellpadding="6">
+                <tr>
+                <th>UserName: *</th><td><input id="txtUserName" class="text-field" type="text" style="width: 240px" /></td>
+                </tr>
+                <tr>
+
+                <th>Password: *</th><td><input id="txtPassword" class="text-field" type="password" style="width: 240px" /></td>
+                </tr>
+            </table>
+
+            <div align="right" style="margin-top: 16px">
+                <button class="btn-class btn-small" onclick="UserLogin()">Sign-in</button>
+            </div>
+            </div>
+        
+        </td>
+        <td style="width: 70px"></td>
+        <td rowspan="3">
+            <img src="../images/login-image-1.png" style="width: 100%; border-radius: 8px" />
+        </td>
+    </tr>
+</table>
+</div>
+</div>

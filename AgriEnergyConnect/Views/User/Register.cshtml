@@ -1,0 +1,146 @@
+﻿@{
+    ViewData["Title"] = "Register";
+    ViewData["Page"] = "Register";
+}
+
+
+@section Styles {
+
+    <style type="text/css">
+
+
+        .content {
+            color: #f0f0f0;
+        }
+
+        a {
+            color: #e2c072;
+        }
+
+        .text-field {
+            background-color: #2a2a2a;
+            color: white;
+            border-radius: 8px;
+            height: 41px;
+        }
+
+        #background {
+            background-image: url('../images/pattern2.png');
+        }
+
+    </style>
+}
+
+@section Scripts {
+
+    <script type="text/javascript">
+    
+        function rbMale_onclick()
+        {
+            document.getElementById("genderMale").checked = true;
+            document.getElementById("genderFemale").checked = false;
+        }
+
+        function rbFemale_onclick() { 
+            document.getElementById("genderMale").checked = false;
+            document.getElementById("genderFemale").checked = true;
+        }
+
+        function SubmitReg() { 
+            let firstName = document.getElementById("txtFirstName").value;
+            let lastName = document.getElementById("txtLastName").value;
+            let emailAddress = document.getElementById("txtEmailAddress").value;
+            let cellphoneNumber = document.getElementById("txtCellphoneNumber").value;
+            let gender = document.getElementById("genderMale").checked ? 'M' : 'F';
+            let userName = document.getElementById("txtUserName").value;
+            let password = document.getElementById("txtPassword").value;
+            let confirmedPassword = document.getElementById("txtConfirmedPassword").value;
+
+            let validation = firstName.length > 0 &&
+                             lastName.length > 0 &&
+                             emailAddress.length > 0 &&
+                             cellphoneNumber.length > 0 &&
+                             userName.length > 0 &&
+                password.length == confirmedPassword.length &&
+                    IsStrongPassword(password);
+
+            if (validation) { 
+                let regInfo = new Object();
+                regInfo.FirstName = firstName;
+                regInfo.LastName = lastName;
+                regInfo.EmailAddress = emailAddress;
+                regInfo.CellphoneNumber = cellphoneNumber;
+                regInfo.Gender = gender;
+                regInfo.UserName = userName;
+                regInfo.Password = password;
+                regInfo.ConfirmedPassword = confirmedPassword;
+
+                let json_obj = JSON.stringify(regInfo);
+                POST("/User/Register", json_obj, null, null);
+            }
+        }
+        
+    </script>
+}
+
+
+<div style="margin-top: 16px;">
+    <div class="content">
+        <h1>Register with Agri-Energy Connect</h1>
+        <table style="margin-top: 32px">
+            <tr>
+                <td style="vertical-align: top; width: fit-content">
+                    Complete all the required fields to submit your registration with Agri-Energy Connect.
+                    <br />
+                    <br />
+
+                    <div style="width: fit-content">
+                        <table cellpadding="6" style="width: 460px">
+                            <tr>
+                                <th>First Name: *</th>
+                                <td><input id="txtFirstName" class="text-field" type="text" style="width: 100%" /></td>
+                            </tr>
+                            <tr>
+                                <th>Last Name: *</th>
+                                <td><input id="txtLastName" class="text-field" type="text" style="width: 100%" /></td>
+                            </tr>
+                            <tr>
+                                <th>Email Address: *</th>
+                                <td><input id="txtEmailAddress" class="text-field" type="text" style="width: 100%" /></td>
+                            </tr>
+                            <tr>
+                                <th>Cellphone Number: *</th>
+                                <td><input id="txtCellphoneNumber" class="text-field" type="text" style="width: 100%" /></td>
+                            </tr>
+                            <tr>
+                                <th>Gender: *</th>
+                                <td><input type="radio" id="genderMale" onclick="rbMale_onclick()" /> Male <input type="radio" id="genderFemale" onclick="rbFemale_onclick()" /> Female</td>
+                            </tr>
+                            <tr>
+                                <th>UserName: *</th>
+                                <td><input id="txtUserName" class="text-field" type="text" style="width: 100%" /></td>
+                            </tr>
+                            <tr>
+                                <th>Password: *</th>
+                                <td><input id="txtPassword" class="text-field" type="password" style="width: 100%" /></td>
+                            </tr>
+                            <tr>
+                                <th>Re-enter Password: *</th>
+                                <td><input id="txtConfirmedPassword" class="text-field" type="password" style="width: 100%" /></td>
+                            </tr>
+                        </table>
+
+                        <div align="right" style="margin-top: 16px">
+                            <button class="btn-class btn-small" onclick="SubmitReg()">Submit</button>
+                        </div>
+                    </div>
+
+                </td>
+                <td style="width: 30px"></td>
+                <td rowspan="3">
+                    <img src="../images/login-image-1.png" style="width: 100%; border-radius: 8px" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #7c7460;
+}
+
+
+.AEC_MENU, .footer {
+    background-color: #dbd6af;
+}
+
+
+.AEC_HEADING1 {
+    width: fit-content;
+    height: fit-content;
+}
+
+h1 {
+    font-family: "18thCentury";
+}
+
+.btn-class {
+    background-color: #556748;
+    color: white;
+    border-style: solid;
+    border-color: #a6ca8d;
+}
+
+    .btn-class:hover {
+        background-color: #8fae79;
+        color: black;
+    }
+
+.btn-small {
+    width: 130px;
+    height: 38px;
+}
