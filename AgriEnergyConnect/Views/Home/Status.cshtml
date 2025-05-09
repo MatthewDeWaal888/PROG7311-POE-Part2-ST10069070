@@ -1,6 +1,8 @@
 ﻿
 @{
     ViewData["Title"] = "Status";
+
+    var query = this.Context.Request.Query;
 }
 
 @section Styles {
@@ -21,19 +23,23 @@
             background-color: white;
             background-image: url('../images/grass-texture1.png');
             border-radius: 16px;
-            border-color: white;
+            border-color: rgb(240, 240, 240);
             border-width: 6px;
             border-style: solid;
 
             width: 100%;
             height: 600px;
 
-            padding-left: 32px;
-            padding-top: 32px;
-            padding-right: 32px;
+            padding-left: 0px;
+            padding-top: 0px;
+            padding-right: 0px;
             padding-bottom: 32px;
             color: black;
             font-size: 20px;
+        }
+
+        a {
+            color: green;
         }
 
         
@@ -45,24 +51,51 @@
 
 <div style="margin-top: 32px;">
 <div class="content">
-<h1>Status</h1>
-
-
 <div class="content2">
-@{
-    var query = this.Context.Request.Query;
 
-    if(query["ActionName"] == "Login" && query["StatusCode"] == "1")
-    {
-        <p>Login Successful</p>
-    }
+    <div align="center">
+        <div style="background-color: rgb(230, 230, 230); padding-left: 0px">
+                    
+            @if (query["StatusCode"] == "1")
+                    {
+                        <img src="../images/success-icon.png" style="height: 300px" />
+                    }
 
-    if (query["ActionName"] == "Login" && query["StatusCode"] == "2")
-    {
-        <p>Login Failed</p>
-    }
-}
+            @if(query["StatusCode"] == "2")
+            {
+                <img src="../images/error-icon.png" style="height: 300px" />
+            }
+
+        </div>
+        <br /><br />
+
+                <div style="width: 50%; text-align: left">
+                    @{
+                       
+
+                        if (query["ActionName"] == "Login" && query["StatusCode"] == "1")
+                        {
+                            <b style="color: limegreen">Login Successful</b>
+                            <p style="color: black">
+                                You sign-in process completed successfully.<br />
+                                <a href="/Home/Index">Return to Homepage</a>
+                            </p>
+
+                        }
+
+                        if (query["ActionName"] == "Login" && query["StatusCode"] == "2")
+                        {
+                            <b style="color: red">Login Failed</b>
+                            <p style="color: black">
+                                Please enter a valid username or password to authenticate.<br />
+                                If you do not have a user account, you can create one by
+                                <a href="/User/Register">clicking here.</a>
+                            </p>
+                        }
+                    }
+                </div>
+
+    </div>
 </div>
-
 </div>
 </div>

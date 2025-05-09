@@ -8,8 +8,13 @@ namespace AgriEnergyConnect.Controllers
 {
     public class UserController : Controller
     {
+        // Data fields
         private readonly AppDbContext _context;
 
+        /// <summary>
+        /// Master constructor
+        /// </summary>
+        /// <param name="context"></param>
         public UserController(AppDbContext context)
         {
             _context = context;
@@ -21,10 +26,16 @@ namespace AgriEnergyConnect.Controllers
         {
             if (this.Request.Method == "POST")
             {
-                bool authorize = await LoginUser();
+                (bool authorize, string userName, string emailAddress, bool isEmployee) = await LoginUser();
 
                 if(authorize)
                 {
+                    Global.UserLoggedIn = true;
+
+                    var userInfo = new { UserName = userName, EmailAddress = emailAddress };
+                    Global.UserInfo = userInfo;
+                    Global.IsEmployee = isEmployee;
+
                     this.Response.StatusCode = 1;
                 }
                 else
@@ -36,7 +47,11 @@ namespace AgriEnergyConnect.Controllers
             return View();
         }
 
-        private async Task<bool> LoginUser()
+        /// <summary>
+        /// Performs the login process.
+        /// </summary>
+        /// <returns></returns>
+        private async Task<(bool, string, string, bool)> LoginUser()
         {
             bool authResult = false;
 
@@ -49,10 +64,14 @@ namespace AgriEnergyConnect.Controllers
             string? userName = authInfo?.UserName;
             string? password = authInfo?.Password;
 
+            string _userName = string.Empty;
+            string _email = string.Empty;
+            bool isEmployee = false;
+
             if(userName != null && password != null)
             {
                 int userIndex = Utils.FindEmployee(userName, _context.Employee);
-                bool isEmployee = userIndex != -1;
+                isEmployee = userIndex != -1;
 
                 if (!isEmployee)
                     userIndex = Utils.FindFarmer(userName, _context.Farmer);
@@ -61,14 +80,22 @@ namespace AgriEnergyConnect.Controllers
 
                 if (userExists)
                 {
-                    string authPassword = isEmployee ? _context.Employee.ToArray<Employee>()[userIndex].Password : _context.Farmer.ToArray<Farmer>()[userIndex].Password;
+                    Employee[] employees = _context.Employee.ToArray();
+                    Farmer[] farmers = _context.Farmer.ToArray();
 
-                    if(password == authPassword)
+                    string authPassword = isEmployee ? employees[userIndex].Password : farmers[userIndex].Password;
+
+                    if (password == authPassword)
+                    {
+                        _userName = isEmployee ? employees[userIndex].UserName : farmers[userIndex].UserName;
+                        _email = isEmployee ? employees[userIndex].EmailAddress : farmers[userIndex].EmailAddress;
+
                         authResult = true;
+                    }
                 }
             }
 
-            return authResult;
+            return (authResult, _userName, _email, isEmployee);
         }
 
         [HttpGet]
@@ -92,6 +119,10 @@ namespace AgriEnergyConnect.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Performs the registration process.
+        /// </summary>
+        /// <returns></returns>
         private async Task<bool> RegisterUser()
         {
             bool regResult = false;
@@ -122,6 +153,19 @@ namespace AgriEnergyConnect.Controllers
             }
 
             return regResult;
+        }
+
+        /// <summary>
+        /// Performs a sign-out operation.
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult SignOut()
+        {
+            Global.UserLoggedIn = false;
+            Global.UserInfo = null;
+            Global.IsEmployee = false;
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
