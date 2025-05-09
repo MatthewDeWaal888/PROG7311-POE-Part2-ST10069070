@@ -25,7 +25,11 @@ namespace AgriEnergyConnect.Controllers
 
                 if(authorize)
                 {
-
+                    this.Response.StatusCode = 1;
+                }
+                else
+                {
+                    this.Response.StatusCode = 2;
                 }
             }
 
@@ -76,7 +80,13 @@ namespace AgriEnergyConnect.Controllers
                 bool regResult = await RegisterUser();
 
                 if (regResult)
-                    return RedirectToAction("Login", "User");
+                {
+                    this.Response.StatusCode = 1;
+                }
+                else
+                {
+                    this.Response.StatusCode = 2;
+                }
             }
 
             return View();

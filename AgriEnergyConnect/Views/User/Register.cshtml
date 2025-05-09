@@ -76,7 +76,11 @@
                 regInfo.ConfirmedPassword = confirmedPassword;
 
                 let json_obj = JSON.stringify(regInfo);
-                POST("/User/Register", json_obj, null, null);
+                POST("/User/Register", json_obj, null, function(status) {
+
+                    window.location = "/Home/Status?ActionName=Register&StatusCode=" + status;
+
+                });
             }
         }
         

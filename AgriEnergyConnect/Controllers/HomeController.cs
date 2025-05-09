@@ -18,6 +18,11 @@ namespace AgriEnergyConnect.Controllers
             return View();
         }
 
+        public IActionResult Status()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

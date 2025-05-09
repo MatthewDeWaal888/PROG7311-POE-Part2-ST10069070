@@ -48,8 +48,12 @@
                 json_obj.UserName = userName;
                 json_obj.Password = password;
 
-                POST("/User/Login", JSON.stringify(json_obj), null, null);
+                POST("/User/Login", JSON.stringify(json_obj), null, login_result);
             }
+        }
+
+        function login_result(status) { 
+            window.location = "/Home/Status?ActionName=Login&StatusCode=" + status;
         }
         
     </script>
@@ -62,7 +66,7 @@
 <table style="margin-top: 32px">
     <tr>
         <td style="vertical-align: top">
-            Enter your login details to continue with the Agri-Energy Connect platform or <a href="/Home/Register">create your user account here</a>
+            Enter your login details to continue with the Agri-Energy Connect platform or <a href="/User/Register">create your user account here</a>
             <br />
             <br />
 
