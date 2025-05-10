@@ -3,6 +3,8 @@
 
 // Write your JavaScript code.
 
+let EMPTY_STRING = "";
+
 // Parameters:
 //      containerElem: The element that will hold the animation playback.
 //      frameStart: The first image to diplay.

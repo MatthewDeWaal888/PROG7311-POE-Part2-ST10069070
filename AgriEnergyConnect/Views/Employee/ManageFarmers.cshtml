@@ -1,7 +1,192 @@
-﻿
+﻿@model AgriEnergyConnect.Models.Tables.Farmer[]?
+
 @{
     ViewData["Title"] = "ManageFarmers";
 }
 
-<h1>ManageFarmers</h1>
+@section Styles {
 
+    <style type="text/css">
+    
+        #background {
+            background-image: url('../images/wheat-farm.png');
+            background-size: 100%;
+        }
+
+        .content {
+            color: white;
+        }
+    
+    </style>
+
+}
+
+@section Scripts {
+
+    <script type="text/javascript">
+    
+        function AddFarmer()
+        {
+            document.getElementById("add-farmer").hidden = false;
+        }
+
+        function RemoveFarmer()
+        {
+
+        }
+
+        function UpdateFarmer()
+        {
+
+        }
+
+        function SubmitFarmerReg() { 
+
+            let firstName = document.getElementById("txtFirstName").value;
+            let lastName = document.getElementById("txtLastName").value;
+            let emailAddress = document.getElementById("txtEmailAddress").value;
+            let cellphoneNumber = document.getElementById("txtCellphoneNumber").value;
+            let gender = document.getElementById("rbMale").checked ? "M" : "F";
+            let userName = document.getElementById("txtUserName").value;
+            let password = document.getElementById("txtPassword").value;
+            let confirmPassword = document.getElementById("txtConfirmPassword").value;
+
+            let validation = firstName.length > 0 &&
+                lastName.length > 0 &&
+                emailAddress.length > 0 &&
+                cellphoneNumber.length > 0 &&
+                userName.length > 0 &&
+                IsStrongPassword(password) &&
+                password == confirmPassword;
+
+            if(validation)
+            {
+                let regInfo = new Object();
+                regInfo.FirstName = firstName;
+                regInfo.LastName = lastName;
+                regInfo.EmailAddress = emailAddress;
+                regInfo.CellphoneNumber = cellphoneNumber;
+                regInfo.Gender = gender;
+                regInfo.UserName = userName;
+                regInfo.Password = password;
+                regInfo.ConfirmPassword = confirmPassword;
+
+                POST("/Employee/ManageFarmers", JSON.stringify(regInfo), [["ActionName", "AddFarmer"]], function (status) {
+
+                    if(status == 1)
+                    {
+                        document.location.reload();
+                    }
+
+                });
+            }
+        }
+        
+        function CancelFarmerReg() {
+            document.getElementById("add-farmer").hidden = true;
+        }
+
+        function rbMale_onclick()
+        {
+            document.getElementById("rbMale").checked = true;
+            document.getElementById("rbFemale").checked = false;
+        }
+
+        function rbFemale_onclick() {
+            document.getElementById("rbMale").checked = false;
+            document.getElementById("rbFemale").checked = true;
+        }
+
+
+    </script>
+
+}
+
+<div style="margin-top: 16px;">
+    <div class="content">
+        <h1>Manage Farmers</h1>
+
+        <div style="width: 100%; background-color: white; border-radius: 8px; padding: 16px">
+
+            <button class="btn-class btn-small" onclick="AddFarmer()">Add Farmer</button>
+            <button class="btn-class btn-small" onclick="RemoveFarmer()">Remove Farmer</button>
+            <button class="btn-class btn-small" onclick="UpdateFarmer()">Update Farmer</button>
+
+            <hr style="color: #333333; height: 3px" />
+
+            <div id="add-farmer" hidden>
+
+                <table style="width: 500px; color: black">
+
+                    <tr>
+                        <th>First Name:</th>
+                        <td><input id="txtFirstName" type="text" value="" /></td>
+                    </tr>
+                    <tr>
+                        <th>Last Name:</th>
+                        <td><input id="txtLastName" type="text" value="" /></td>
+                    </tr>
+                    <tr>
+                        <th>Email Address:</th>
+                        <td><input id="txtEmailAddress" type="email" value="" /></td>
+                    </tr>
+                    <tr>
+                        <th>Cellphone Number:</th>
+                        <td><input id="txtCellphoneNumber" type="text" value="" /></td>
+                    </tr>
+                    <tr>
+                        <th>Gender:</th>
+                        <td><input id="rbMale" type="radio" onclick="rbMale_onclick()" /> Male <input id="rbFemale" type="radio" onclick="rbFemale_onclick()" /> Female</td>
+                    </tr>
+                    <tr>
+                        <th>UserName:</th>
+                        <td><input id="txtUserName" type="text" value="" /></td>
+                    </tr>
+                    <tr>
+                        <th>Password:</th>
+                        <td><input id="txtPassword" type="password" value="" /></td>
+                    </tr>
+                    <tr>
+                        <th>Re-enter Password:</th>
+                        <td><input id="txtConfirmPassword" type="password" value="" /></td>
+                    </tr>
+                </table>
+                <div align="right" style="width: 410px">
+                    <button onclick="SubmitFarmerReg()">Submit</button>
+                    <button onclick="CancelFarmerReg()">Cancel</button>
+                </div>
+
+                <hr style="color: #333333; height: 3px" />
+            </div>
+
+
+            <table style="width: 100%; color: black" cellpadding="4">
+
+                <tr>
+                    <th>First Name:</th>
+                    <th>Last Name:</th>
+                    <th>Email Address:</th>
+                    <th>Cellphone Number:</th>
+                    <th>Gender:</th>
+                    <th>UserName:</th>
+                </tr>
+
+                @if(this.Model != null)
+                {
+                    @foreach(var farmer in this.Model)
+                    {
+                        <tr>
+                            <td>@farmer.FirstName</td>
+                            <td>@farmer.LastName</td>
+                            <td>@farmer.EmailAddress</td>
+                            <td>@farmer.CellphoneNumber</td>
+                            <td>@farmer.Gender</td>
+                            <td>@farmer.UserName</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+
+    </div>
+</div>
