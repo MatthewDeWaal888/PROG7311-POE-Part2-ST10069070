@@ -26,13 +26,13 @@ namespace AgriEnergyConnect.Controllers
         {
             if (this.Request.Method == "POST")
             {
-                (bool authorize, string userName, string emailAddress, bool isEmployee) = await LoginUser();
+                (bool authorize, string userName, string emailAddress, bool isEmployee, int userID) = await LoginUser();
 
                 if(authorize)
                 {
                     Global.UserLoggedIn = true;
 
-                    var userInfo = new { UserName = userName, EmailAddress = emailAddress };
+                    var userInfo = new { UserID = userID, UserName = userName, EmailAddress = emailAddress };
                     Global.UserInfo = userInfo;
                     Global.IsEmployee = isEmployee;
 
@@ -51,7 +51,7 @@ namespace AgriEnergyConnect.Controllers
         /// Performs the login process.
         /// </summary>
         /// <returns></returns>
-        private async Task<(bool, string, string, bool)> LoginUser()
+        private async Task<(bool, string, string, bool, int)> LoginUser()
         {
             bool authResult = false;
 
@@ -67,6 +67,7 @@ namespace AgriEnergyConnect.Controllers
             string _userName = string.Empty;
             string _email = string.Empty;
             bool isEmployee = false;
+            int userID = -1;
 
             if(userName != null && password != null)
             {
@@ -83,6 +84,8 @@ namespace AgriEnergyConnect.Controllers
                     Employee[] employees = _context.Employee.ToArray();
                     Farmer[] farmers = _context.Farmer.ToArray();
 
+                    userID = isEmployee ? employees[userIndex].EmployeeID : farmers[userIndex].FarmerID;
+
                     string authPassword = isEmployee ? employees[userIndex].Password : farmers[userIndex].Password;
 
                     if (password == authPassword)
@@ -95,7 +98,7 @@ namespace AgriEnergyConnect.Controllers
                 }
             }
 
-            return (authResult, _userName, _email, isEmployee);
+            return (authResult, _userName, _email, isEmployee, userID);
         }
 
         [HttpGet]

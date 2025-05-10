@@ -75,5 +75,22 @@ namespace AgriEnergyConnect.Models
 
             return index;
         }
+
+        public static int FindFarmer(int farmerID, DbSet<Farmer> farmers)
+        {
+            var index = -1;
+            var items = farmers.ToArray();
+
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (items[i].FarmerID == farmerID)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
+        }
     }
 }

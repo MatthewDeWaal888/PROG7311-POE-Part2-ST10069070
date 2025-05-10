@@ -1,8 +1,185 @@
-﻿
+﻿@model (AgriEnergyConnect.Models.Tables.Product[] p, AppDbContext c)
+
 @{
     ViewData["Title"] = "Product";
     ViewData["Page"] = "Product";
+
+    dynamic? userInfo = (dynamic?)Global.UserInfo;
 }
 
-<h1>Product</h1>
+@section Styles {
+
+    <style type="text/css">
+
+        .content {
+            color: #f0f0f0;
+        }
+
+        #background {
+            background-image: url('../images/pattern2.png');
+        }
+        
+    </style>
+
+}
+
+@section Scripts {
+
+    <script type="text/javascript">
+    
+        function AddProduct()
+        {
+            document.getElementById("add-product").hidden = false;
+        }
+
+        function CancelAddProduct() { 
+            document.getElementById("add-product").hidden = true;
+        }
+
+        function RemoveProduct() { 
+        
+        }
+
+        function SubmitProduct() { 
+            let productName = document.getElementById("txtProductName").value;
+            let category = document.getElementById("txtCategory").value;
+            let productionDate = document.getElementById("txtProductionDate").value;
+            let productType = document.getElementById("txtProductType");
+            
+            let validation = productName.length > 0 &&
+                             category.length > 0 &&
+                             productionDate.length > 0 &&
+                             productType.length > 0;
+
+            if(validation)
+            {
+                let product = new Object();
+                product.Name = productName;
+                product.Category = category;
+                product.ProductionDate = productionDate;
+                product.Type = productType;
+
+                POST("/Product/Product", JSON.stringify(product), [["ActionName", "AddProduct"]], function (status) {
+
+                    if (status == 1) { 
+                        document.location.reload();
+                    }
+
+                });
+            }
+        }
+        
+    </script>
+
+}
+
+<div style="margin-top: 16px;">
+    <div class="content">
+
+        @if(Global.IsEmployee)
+        {
+            <h1>Browse Products</h1>
+
+            <div style="margin-top: 32px; background-color: white; border-radius: 16px; padding: 16px">
+
+                <table style="width: 100%; color: black">
+
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Production Date</th>
+                        <th>Type</th>
+                        <th>Farmer</th>
+                    </tr>
+
+                @foreach(var product in this.Model.p)
+                {
+                    var farmer = this.Model.c.Farmer.ToArray()[Utils.FindFarmer(product.ProductID, this.Model.c.Farmer)];
+
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>@product.Category</td>
+                        <td>@product.ProductionDate</td>
+                        <td>@product.ProductType</td>
+                        <td>@product.ProductType</td>
+                        <td>@farmer.FirstName @farmer.LastName</td>
+                    </tr>
+                }
+
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <h1>Manage Your Products</h1>
+
+            <div style="margin-top: 32px; background-color: white; border-radius: 16px; padding: 16px">
+
+                <div style="padding: 8px">
+                    <button class="btn-class btn-small" onclick="AddProduct()">Add</button>
+                    <button class="btn-class btn-small" onclick="RemoveProduct()">Remove</button>
+                </div>
+
+                <hr style="color: #333333; height: 3px" />
+
+                <div id="add-product" style="color: black" hidden>
+                    <table style="width: 500px">
+                        <tr>
+                            <th>Product Name:</th>
+                            <td><input id="txtProductName" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Category:</th>
+                            <td><input id="txtCategory" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Production Date:</th>
+                            <td><input id="txtProductionDate" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Product Type:</th>
+                            <td><input id="txtProductType" type="text" value="" /></td>
+                        </tr>
+                    </table>
+
+                    <div align="right" style="width: 410px">
+                        <button onclick="AddProduct()">Add Product</button>
+                        <button onclick="CancelAddProduct()">Cancel</button>
+                    </div>
+
+                    <hr style="color: #333333; height: 3px" />
+                </div>
+
+                <table style="width: 100%; color: black">
+
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Production Date</th>
+                        <th>Type</th>
+                        <th>Farmer</th>
+                    </tr>
+
+                    @foreach (var product in this.Model.p.Where(i => i.FarmerID == userInfo?.UserID))
+                    {
+                        var farmer = this.Model.c.Farmer.ToArray()[Utils.FindFarmer(product.ProductID, this.Model.c.Farmer)];
+                       
+                        <tr>
+                            <td>@product.Name</td>
+                            <td>@product.Category</td>
+                            <td>@product.ProductionDate</td>
+                            <td>@product.ProductType</td>
+                            <td>@product.ProductType</td>
+                            <td>@farmer.FirstName @farmer.LastName</td>
+                        </tr>
+                    }
+
+                </table>
+
+            </div>
+        }
+
+    </div>
+</div>
 

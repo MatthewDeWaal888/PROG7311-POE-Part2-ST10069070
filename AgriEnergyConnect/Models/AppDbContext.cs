@@ -13,5 +13,7 @@ namespace AgriEnergyConnect.Models
         public DbSet<Farmer> Farmer { get; set; }
 
         public DbSet<Discussion> Discussion { get; set; }
+
+        public DbSet<Product> Product { get; set; }
     }
 }
