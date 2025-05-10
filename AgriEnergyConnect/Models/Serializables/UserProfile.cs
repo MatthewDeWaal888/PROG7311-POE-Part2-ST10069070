@@ -1,17 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Text.Json.Serialization;
 
-namespace AgriEnergyConnect.Models.Tables
+namespace AgriEnergyConnect.Models.Serializables
 {
-    public class Farmer
+    [JsonSerializable(typeof(UserProfile))]
+    public class UserProfile
     {
-        [Key]
-        public int FarmerID { get; set; }
+        public int UserID { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? EmailAddress { get; set; }
         public string? CellphoneNumber { get; set; }
         public string? Gender { get; set; }
         public string? UserName { get; set; }
-        public string? Password { get; set; }
+
     }
 }

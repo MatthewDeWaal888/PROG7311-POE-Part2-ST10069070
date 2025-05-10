@@ -2,6 +2,7 @@
 using AgriEnergyConnect.Models.Serializables;
 using AgriEnergyConnect.Models.Tables;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace AgriEnergyConnect.Controllers
@@ -33,6 +34,18 @@ namespace AgriEnergyConnect.Controllers
                     {
                         this.Response.StatusCode = 2;
                     }
+                }
+
+                if (this.Request.Headers["ActionName"] == "RemoveFarmer")
+                {
+                    await RemoveFarmer();
+                    this.Response.StatusCode = 1;
+                }
+
+                if (this.Request.Headers["ActionName"] == "UpdateFarmer")
+                {
+                    await UpdateFarmer();
+                    this.Response.StatusCode = 1;
                 }
             }
 
@@ -69,6 +82,44 @@ namespace AgriEnergyConnect.Controllers
             }
 
             return regResult;
+        }
+
+        private async Task RemoveFarmer()
+        {
+            var reader = new StreamReader(this.Request.Body);
+            string farmerId = await reader.ReadToEndAsync();
+            reader.Close();
+
+            int iFarmerID = Convert.ToInt32(farmerId);
+            Farmer farmer = _context.Farmer.Where(p => p.FarmerID == iFarmerID).ToList()[0];
+
+            _context.Farmer.Remove(farmer);
+            await _context.SaveChangesAsync();
+        }
+
+        private async Task UpdateFarmer()
+        {
+            var reader = new StreamReader(this.Request.Body);
+            string content = await reader.ReadToEndAsync();
+            reader.Close();
+
+            UserProfile? userProfile = JsonConvert.DeserializeObject<UserProfile>(content);
+
+            if(userProfile != null)
+            {
+                Farmer farmer = _context.Farmer.Where(p => p.FarmerID == userProfile.UserID).ToList()[0];
+
+                // Update the farmer's details.
+                farmer.FirstName = userProfile.FirstName;
+                farmer.LastName = userProfile.LastName;
+                farmer.EmailAddress = userProfile.EmailAddress;
+                farmer.CellphoneNumber = userProfile.CellphoneNumber;
+                farmer.Gender = userProfile.Gender;
+                farmer.UserName = userProfile.UserName;
+
+                _context.Farmer.Update(farmer);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

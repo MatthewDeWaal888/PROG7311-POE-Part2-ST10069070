@@ -16,7 +16,8 @@
         }
 
         #background {
-            background-image: url('../images/pattern2.png');
+            background-image: url('../images/wheat-farm.png');
+            background-size: 100%;
         }
         
     </style>
@@ -30,21 +31,24 @@
         function AddProduct()
         {
             document.getElementById("add-product").hidden = false;
+            document.getElementById("remove-product").hidden = true;
         }
 
         function CancelAddProduct() { 
             document.getElementById("add-product").hidden = true;
+            document.getElementById("remove-product").hidden = true;
         }
 
-        function RemoveProduct() { 
-        
+        function RemoveProduct() {
+            document.getElementById("add-product").hidden = true;
+            document.getElementById("remove-product").hidden = false;
         }
 
         function SubmitProduct() { 
             let productName = document.getElementById("txtProductName").value;
             let category = document.getElementById("txtCategory").value;
             let productionDate = document.getElementById("txtProductionDate").value;
-            let productType = document.getElementById("txtProductType");
+            let productType = document.getElementById("txtProductType").value;
             
             let validation = productName.length > 0 &&
                              category.length > 0 &&
@@ -57,7 +61,7 @@
                 product.Name = productName;
                 product.Category = category;
                 product.ProductionDate = productionDate;
-                product.Type = productType;
+                product.ProductType = productType;
 
                 POST("/Product/Product", JSON.stringify(product), [["ActionName", "AddProduct"]], function (status) {
 
@@ -67,6 +71,26 @@
 
                 });
             }
+        }
+
+        function RequestProductRemoval()
+        {
+            let productId = document.getElementById("product").value;
+
+            if(productId.length > 0)
+            {
+                POST("/Product/Product", productId, [["ActionName", "RemoveProduct"]], function (status) {
+                    if(status == 1)
+                    {
+                        document.location.reload();
+                    }
+                });
+            }
+        }
+
+        function CancelProductRemoval() {
+            document.getElementById("add-product").hidden = true;
+            document.getElementById("remove-product").hidden = true;
         }
         
     </script>
@@ -94,13 +118,12 @@
 
                 @foreach(var product in this.Model.p)
                 {
-                    var farmer = this.Model.c.Farmer.ToArray()[Utils.FindFarmer(product.ProductID, this.Model.c.Farmer)];
+                    var farmer = this.Model.c.Farmer.ToArray()[Utils.FindFarmer(product.FarmerID, this.Model.c.Farmer)];
 
                     <tr>
                         <td>@product.Name</td>
                         <td>@product.Category</td>
                         <td>@product.ProductionDate</td>
-                        <td>@product.ProductType</td>
                         <td>@product.ProductType</td>
                         <td>@farmer.FirstName @farmer.LastName</td>
                     </tr>
@@ -144,11 +167,29 @@
                     </table>
 
                     <div align="right" style="width: 410px">
-                        <button onclick="AddProduct()">Add Product</button>
+                        <button onclick="SubmitProduct()">Add Product</button>
                         <button onclick="CancelAddProduct()">Cancel</button>
                     </div>
 
                     <hr style="color: #333333; height: 3px" />
+                </div>
+
+                <div id="remove-product" style="color: black" hidden>
+                    <b>Product ID: </b>
+                    <select id="product">
+
+                        @foreach(var product in this.Model.p)
+                        {
+                            <option>@product.ProductID</option>
+                        }
+
+                    </select>
+                    <br />
+
+                    <div align="right">
+                        <button onclick="RequestProductRemoval()">Remove</button>
+                        <button onclick="CancelProductRemoval()">Cancel</button>
+                    </div>
                 </div>
 
                 <table style="width: 100%; color: black">
@@ -163,13 +204,12 @@
 
                     @foreach (var product in this.Model.p.Where(i => i.FarmerID == userInfo?.UserID))
                     {
-                        var farmer = this.Model.c.Farmer.ToArray()[Utils.FindFarmer(product.ProductID, this.Model.c.Farmer)];
+                        var farmer = this.Model.c.Farmer.ToArray()[Utils.FindFarmer(product.FarmerID, this.Model.c.Farmer)];
                        
                         <tr>
                             <td>@product.Name</td>
                             <td>@product.Category</td>
                             <td>@product.ProductionDate</td>
-                            <td>@product.ProductType</td>
                             <td>@product.ProductType</td>
                             <td>@farmer.FirstName @farmer.LastName</td>
                         </tr>

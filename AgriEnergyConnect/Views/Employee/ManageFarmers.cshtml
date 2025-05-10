@@ -28,16 +28,22 @@
         function AddFarmer()
         {
             document.getElementById("add-farmer").hidden = false;
+            document.getElementById("remove-farmer").hidden = true;
+            document.getElementById("update-farmer").hidden = true;
         }
 
         function RemoveFarmer()
         {
-
+            document.getElementById("add-farmer").hidden = true;
+            document.getElementById("remove-farmer").hidden = false;
+            document.getElementById("update-farmer").hidden = true;
         }
 
         function UpdateFarmer()
         {
-
+            document.getElementById("add-farmer").hidden = true;
+            document.getElementById("remove-farmer").hidden = true;
+            document.getElementById("update-farmer").hidden = false;
         }
 
         function SubmitFarmerReg() { 
@@ -97,6 +103,70 @@
             document.getElementById("rbFemale").checked = true;
         }
 
+        function RequestFarmerRemoval() { 
+            let farmerId = document.getElementById("farmerID").value;
+
+            if(farmerId.length > 0)
+            {
+                POST("/Employee/ManageFarmers", farmerId, [["ActionName", "RemoveFarmer"]], function (status) {
+                    if(status == 1)
+                    {
+                        document.location.reload();
+                    }
+                });
+            }
+        }
+
+        function CancelFarmerRemoval() { 
+            document.getElementById("remove-farmer").hidden = true;
+        }
+
+        function rbMale2_onclick() { 
+            document.getElementById("rbMale2").checked = true;
+            document.getElementById("rbFemale2").checked = false;
+        }
+
+        function rbFemale2_onclick() {
+            document.getElementById("rbMale2").checked = false;
+            document.getElementById("rbFemale2").checked = true;
+        }
+
+        function UpdateFarmerInfo() { 
+            let farmerID = parseInt(document.getElementById("farmerID2").value, 10);
+            let firstName = document.getElementById("txtFirstName2").value;
+            let lastName = document.getElementById("txtLastName2").value;
+            let emailAddress = document.getElementById("txtEmailAddress2").value;
+            let cellphoneNumber = document.getElementById("txtCellphoneNumber2").value;
+            let gender = document.getElementById("rbMale2").checked ? "M" : "F";
+            let userName = document.getElementById("txtUserName2").value;
+            
+            let validation = firstName.length > 0 &&
+                             lastName.length > 0 &&
+                             emailAddress.length > 0 &&
+                             cellphoneNumber.length > 0 &&
+                             userName.length > 0;
+
+            if(validation)
+            {
+                let userProfile = new Object();
+                userProfile.UserID = farmerID;
+                userProfile.FirstName = firstName;
+                userProfile.LastName = lastName;
+                userProfile.EmailAddress = emailAddress;
+                userProfile.CellphoneNumber = cellphoneNumber;
+                userProfile.Gender = gender;
+                userProfile.UserName = userName;
+
+                POST("/Employee/ManageFarmers", JSON.stringify(userProfile), [["ActionName", "UpdateFarmer"]], function (status) {
+
+                    if(status == 1)
+                    {
+                        document.location.reload();
+                    }
+
+                });
+            }
+        }
 
     </script>
 
@@ -115,54 +185,139 @@
             <hr style="color: #333333; height: 3px" />
 
             <div id="add-farmer" hidden>
+                
+                <div style="width: fit-content; color: black">
+                    <table style="width: 100%">
 
-                <table style="width: 500px; color: black">
+                        <tr>
+                            <th>First Name:</th>
+                            <td><input id="txtFirstName" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Last Name:</th>
+                            <td><input id="txtLastName" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Email Address:</th>
+                            <td><input id="txtEmailAddress" type="email" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Cellphone Number:</th>
+                            <td><input id="txtCellphoneNumber" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Gender:</th>
+                            <td><input id="rbMale" type="radio" onclick="rbMale_onclick()" /> Male <input id="rbFemale" type="radio" onclick="rbFemale_onclick()" /> Female</td>
+                        </tr>
+                        <tr>
+                            <th>UserName:</th>
+                            <td><input id="txtUserName" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Password:</th>
+                            <td><input id="txtPassword" type="password" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Re-enter Password:</th>
+                            <td><input id="txtConfirmPassword" type="password" value="" /></td>
+                        </tr>
+                    </table>
+                    <div align="right" style="width: 410px">
+                        <button onclick="SubmitFarmerReg()">Submit</button>
+                        <button onclick="CancelFarmerReg()">Cancel</button>
+                    </div>
 
-                    <tr>
-                        <th>First Name:</th>
-                        <td><input id="txtFirstName" type="text" value="" /></td>
-                    </tr>
-                    <tr>
-                        <th>Last Name:</th>
-                        <td><input id="txtLastName" type="text" value="" /></td>
-                    </tr>
-                    <tr>
-                        <th>Email Address:</th>
-                        <td><input id="txtEmailAddress" type="email" value="" /></td>
-                    </tr>
-                    <tr>
-                        <th>Cellphone Number:</th>
-                        <td><input id="txtCellphoneNumber" type="text" value="" /></td>
-                    </tr>
-                    <tr>
-                        <th>Gender:</th>
-                        <td><input id="rbMale" type="radio" onclick="rbMale_onclick()" /> Male <input id="rbFemale" type="radio" onclick="rbFemale_onclick()" /> Female</td>
-                    </tr>
-                    <tr>
-                        <th>UserName:</th>
-                        <td><input id="txtUserName" type="text" value="" /></td>
-                    </tr>
-                    <tr>
-                        <th>Password:</th>
-                        <td><input id="txtPassword" type="password" value="" /></td>
-                    </tr>
-                    <tr>
-                        <th>Re-enter Password:</th>
-                        <td><input id="txtConfirmPassword" type="password" value="" /></td>
-                    </tr>
-                </table>
-                <div align="right" style="width: 410px">
-                    <button onclick="SubmitFarmerReg()">Submit</button>
-                    <button onclick="CancelFarmerReg()">Cancel</button>
+                    <hr style="color: #333333; height: 3px" />
+                </div>
+            </div>
+
+            <div id="remove-farmer" hidden>
+
+               <div style="width: fit-content; color: black">
+                   Please enter a farmer ID to continue.<br />
+                   <b>Farmer ID: </b>
+
+                    <select id="farmerID">
+                        
+
+                        @foreach (var farmer in this.Model)
+                        {
+                            <option>@farmer.FarmerID</option>
+                        }
+
+                    </select>
+
+                   <br />
+                   <div align="right">
+                       <button onclick="RequestFarmerRemoval()">Remove</button>
+                       <button onclick="CancelFarmerRemoval()">Cancel</button>
+                   </div>
+
+                    <hr style="color: #333333; height: 3px" />
+               </div>
+
+            </div>
+
+            <div id="update-farmer" hidden>
+
+                <div style="width: fit-content; color: black">
+                    
+                    <table style="width: 100%">
+
+                        <tr>
+                            <th>Farmer ID</th>
+                            <td>
+                                <select id="farmerID2">
+
+                                    @foreach(var farmer in this.Model)
+                                    {
+                                        <option>@farmer.FarmerID</option>
+                                    }
+
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>First Name:</th>
+                            <td><input id="txtFirstName2" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Last Name:</th>
+                            <td><input id="txtLastName2" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Email Address:</th>
+                            <td><input id="txtEmailAddress2" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Cellphone Number:</th>
+                            <td><input id="txtCellphoneNumber2" type="text" value="" /></td>
+                        </tr>
+                        <tr>
+                            <th>Gender:</th>
+                            <td><input id="rbMale2"" type="radio" onclick="rbMale2_onclick()" /> Male <input id="rbFemale2" type="radio" onclick="rbFemale2_onclick()" /> Female</td>
+                        </tr>
+                        <tr>
+                            <th>UserName:</th>
+                            <td><input id="txtUserName2" type="text" value="" /></td>
+                        </tr>
+                    </table>
+                    <div align="right">
+                        <button onclick="UpdateFarmerInfo()">Submit</button>
+                        <button onclick="CancelUpdate()">Cancel</button>
+                    </div>
+
+                    <hr style="color: #333333; height: 3px" />
+
                 </div>
 
-                <hr style="color: #333333; height: 3px" />
             </div>
 
 
             <table style="width: 100%; color: black" cellpadding="4">
 
                 <tr>
+                    <th>Farmer ID:</th>
                     <th>First Name:</th>
                     <th>Last Name:</th>
                     <th>Email Address:</th>
@@ -176,6 +331,7 @@
                     @foreach(var farmer in this.Model)
                     {
                         <tr>
+                            <td>@farmer.FarmerID</td>
                             <td>@farmer.FirstName</td>
                             <td>@farmer.LastName</td>
                             <td>@farmer.EmailAddress</td>
