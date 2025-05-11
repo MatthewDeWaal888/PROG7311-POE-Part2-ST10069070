@@ -2,9 +2,14 @@
 
 namespace AgriEnergyConnect.Models.Serializables
 {
+    /// <summary>
+    /// This class is used for serialization with JSON and is not an entity
+    /// for the database.
+    /// </summary>
     [JsonSerializable(typeof(Product))]
     public class Product
     {
+        // Automatic Properties
         public string? Name { get; set; }
         public string? Category { get; set; }
         public string? ProductionDate { get; set; }

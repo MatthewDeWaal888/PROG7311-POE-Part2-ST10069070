@@ -43,14 +43,19 @@
 @section Scripts {
 
     <script type="text/javascript">
-    
+
+        // Occurs when the Post button is clicked.
         function PostDiscussion()
         {
+            // Obtain the user's discussion.
             let content = document.getElementById("txtDiscussion").value;
 
+            // Check if the length of the discussion is greater than zero.
             if (content.length > 0) {
+                // Perform a POST operation.
                 POST("/Collaboration/Forum", content, [["ActionName", "PostDiscussion"]], function (status) {
 
+                    // Check if the status is OK.
                     if (status == 1) {
                         document.location.reload();
                     }
@@ -59,6 +64,7 @@
             }
         }
 
+        // Occurs when the Clear button is clicked.
         function ClearDiscussion() { 
             document.getElementById("txtDiscussion").value = EMPTY_STRING;
         }
@@ -80,6 +86,7 @@
 
     <div style="margin-top: 32px; background-color: white; color: black">
 
+        <!-- Iterate through the array -->
         @foreach(var discussion in this.Model)
             {
                 <div style="border-color: rgb(200, 200, 200); border-style: solid; border-width: 2px; padding: 16px">

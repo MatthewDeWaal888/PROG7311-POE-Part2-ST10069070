@@ -4,10 +4,18 @@ using System.Diagnostics;
 
 namespace AgriEnergyConnect.Controllers
 {
+    /// <summary>
+    /// Home Controller
+    /// </summary>
     public class HomeController : Controller
     {
+        // Data fields
         private readonly ILogger<HomeController> _logger;
 
+        /// <summary>
+        /// Master constructor
+        /// </summary>
+        /// <param name="logger"></param>
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;

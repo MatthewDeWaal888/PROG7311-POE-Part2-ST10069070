@@ -28,6 +28,7 @@
 
     <script type="text/javascript">
     
+        // Occurs when the user clicked the 'Add Product' button.
         function AddProduct()
         {
             document.getElementById("add-product").hidden = false;
@@ -35,37 +36,46 @@
             document.getElementById("filter-product").hidden = true;
         }
 
+        // Occurs when the user clicked the 'Cancel' button.
         function CancelAddProduct() { 
             document.getElementById("add-product").hidden = true;
         }
 
+        // Occurs when the user clicked the 'Remove' button.
         function RemoveProduct() {
             document.getElementById("add-product").hidden = true;
             document.getElementById("remove-product").hidden = false;
             document.getElementById("filter-product").hidden = true;
         }
 
+        // Occurs when the user clicked the 'Submit' button.
         function SubmitProduct() { 
+            // Get the field data.
             let productName = document.getElementById("txtProductName").value;
             let category = document.getElementById("txtCategory").value;
             let productionDate = document.getElementById("txtProductionDate").value;
             let productType = document.getElementById("txtProductType").value;
             
+            // Perform a validation check.
             let validation = productName.length > 0 &&
                              category.length > 0 &&
                              productionDate.length > 0 &&
                              productType.length > 0;
-
+            
+            // Check if the validation succeeded.
             if(validation)
             {
+                // Create a new object.
                 let product = new Object();
                 product.Name = productName;
                 product.Category = category;
                 product.ProductionDate = productionDate;
                 product.ProductType = productType;
 
+                // Perform a POST operation.
                 POST("/Product/Product", JSON.stringify(product), [["ActionName", "AddProduct"]], function (status) {
 
+                    // Check if the status is OK.
                     if (status == 1) { 
                         document.location.reload();
                     }
@@ -74,13 +84,18 @@
             }
         }
 
+        // Occurs when the user clicked the 'Remove Product' button.
         function RequestProductRemoval()
         {
+            // Obtain the product id.
             let productId = document.getElementById("product").value;
 
             if(productId.length > 0)
             {
+                // Perform a POST operation.
                 POST("/Product/Product", productId, [["ActionName", "RemoveProduct"]], function (status) {
+
+                    // Check if the status is OK.
                     if(status == 1)
                     {
                         document.location.reload();
@@ -89,23 +104,28 @@
             }
         }
 
+        // Occurs when the user clicked the 'Cancel' button.
         function CancelProductRemoval() {
             document.getElementById("add-product").hidden = true;
             document.getElementById("remove-product").hidden = true;
         }
 
+        // Occurs when the user clicked the 'Filter Products' button.
         function FilterProducts() {
             document.getElementById("add-product").hidden = true;
             document.getElementById("remove-product").hidden = true;
             document.getElementById("filter-product").hidden = false;
         }
 
+        // Occurs when the user clicked the 'Submit' button.
         function SubmitFilter() { 
+            // Obtain the field data.
             let productName = document.getElementById("txtProductName2").value;
             let productCategory = document.getElementById("txtCategory2").value;
             let productionDate = document.getElementById("txtProductionDate2").value;
             let productType = document.getElementById("txtProductType2").value;
 
+            // Declare a query string.
             let queryString = EMPTY_STRING;
 
             if(productName.length > 0)
@@ -128,6 +148,7 @@
                 queryString += "&ProductType=" + productType;
             }
 
+            // Refresh the page with the query string.
             document.location = "/Product/Product?" + queryString.substring(1, queryString.length);
         }
 
@@ -205,6 +226,7 @@
                         <th>Farmer</th>
                     </tr>
 
+                <!-- Iterate through the collection. -->
                 @foreach(var product in this.Model.p)
                 {
                     var farmer = this.Model.c.Farmer.ToArray()[Utils.FindFarmer(product.FarmerID, this.Model.c.Farmer)];
@@ -326,6 +348,7 @@
                         <th>Farmer</th>
                     </tr>
 
+                    <!-- Iterate through the collection. -->
                     @foreach (var product in this.Model.p.Where(i => i.FarmerID == userInfo?.UserID))
                     {
                         var farmer = this.Model.c.Farmer.ToArray()[Utils.FindFarmer(product.FarmerID, this.Model.c.Farmer)];
@@ -346,4 +369,3 @@
 
     </div>
 </div>
-

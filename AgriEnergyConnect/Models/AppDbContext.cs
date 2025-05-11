@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AgriEnergyConnect.Models
 {
+    /// <summary>
+    /// Global view of the database.
+    /// </summary>
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }

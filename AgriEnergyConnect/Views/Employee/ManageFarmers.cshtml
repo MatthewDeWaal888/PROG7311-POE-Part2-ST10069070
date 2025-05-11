@@ -25,6 +25,7 @@
 
     <script type="text/javascript">
     
+        // Occurs when the user clicks the 'Add Farmer' button.
         function AddFarmer()
         {
             document.getElementById("add-farmer").hidden = false;
@@ -32,6 +33,7 @@
             document.getElementById("update-farmer").hidden = true;
         }
 
+        // Occurs when the user clicks the 'Remove Farmer' button.
         function RemoveFarmer()
         {
             document.getElementById("add-farmer").hidden = true;
@@ -39,6 +41,7 @@
             document.getElementById("update-farmer").hidden = true;
         }
 
+        // Occurs when the user clicks the 'Update Farmer' button.
         function UpdateFarmer()
         {
             document.getElementById("add-farmer").hidden = true;
@@ -46,8 +49,10 @@
             document.getElementById("update-farmer").hidden = false;
         }
 
+        // Occurs when the user clicks the 'Submit' button.
         function SubmitFarmerReg() { 
 
+            // Get the field data.
             let firstName = document.getElementById("txtFirstName").value;
             let lastName = document.getElementById("txtLastName").value;
             let emailAddress = document.getElementById("txtEmailAddress").value;
@@ -57,6 +62,7 @@
             let password = document.getElementById("txtPassword").value;
             let confirmPassword = document.getElementById("txtConfirmPassword").value;
 
+            // Perform a validation check.
             let validation = firstName.length > 0 &&
                 lastName.length > 0 &&
                 emailAddress.length > 0 &&
@@ -65,8 +71,10 @@
                 IsStrongPassword(password) &&
                 password == confirmPassword;
 
+            // Check if the validation succeeded.
             if(validation)
             {
+                // Create a new object.
                 let regInfo = new Object();
                 regInfo.FirstName = firstName;
                 regInfo.LastName = lastName;
@@ -77,8 +85,10 @@
                 regInfo.Password = password;
                 regInfo.ConfirmPassword = confirmPassword;
 
+                // Perform a POST operation.
                 POST("/Employee/ManageFarmers", JSON.stringify(regInfo), [["ActionName", "AddFarmer"]], function (status) {
 
+                    // Check if the status is OK.
                     if(status == 1)
                     {
                         document.location.reload();
@@ -88,27 +98,34 @@
             }
         }
         
+        // Occurs when the user clicks the 'Cancel' button.
         function CancelFarmerReg() {
             document.getElementById("add-farmer").hidden = true;
         }
 
+        // Occurs when the user selected the radio button 'Male'.
         function rbMale_onclick()
         {
             document.getElementById("rbMale").checked = true;
             document.getElementById("rbFemale").checked = false;
         }
 
+        // Occurs when the user selected the radio button 'Female'.
         function rbFemale_onclick() {
             document.getElementById("rbMale").checked = false;
             document.getElementById("rbFemale").checked = true;
         }
 
+        // Occurs when the user is requesting a farmer to be removed from the database.
         function RequestFarmerRemoval() { 
             let farmerId = document.getElementById("farmerID").value;
 
             if(farmerId.length > 0)
             {
+                // Perform a POST operation.
                 POST("/Employee/ManageFarmers", farmerId, [["ActionName", "RemoveFarmer"]], function (status) {
+
+                    // Check if the status is OK.
                     if(status == 1)
                     {
                         document.location.reload();
@@ -117,21 +134,26 @@
             }
         }
 
+        // Occurs when the user is cancelling the request for a farmer to be removed.
         function CancelFarmerRemoval() { 
             document.getElementById("remove-farmer").hidden = true;
         }
 
+        // Occurs when the user selected the radio button 'Male'.
         function rbMale2_onclick() { 
             document.getElementById("rbMale2").checked = true;
             document.getElementById("rbFemale2").checked = false;
         }
 
+        // Occurs when the user selected the radio button 'Female'.
         function rbFemale2_onclick() {
             document.getElementById("rbMale2").checked = false;
             document.getElementById("rbFemale2").checked = true;
         }
 
+        // Occurs when the user clicked the button 'Update'.
         function UpdateFarmerInfo() { 
+            // Get the field data.
             let farmerID = parseInt(document.getElementById("farmerID2").value, 10);
             let firstName = document.getElementById("txtFirstName2").value;
             let lastName = document.getElementById("txtLastName2").value;
@@ -140,14 +162,17 @@
             let gender = document.getElementById("rbMale2").checked ? "M" : "F";
             let userName = document.getElementById("txtUserName2").value;
             
+            // Perform a validation check.
             let validation = firstName.length > 0 &&
                              lastName.length > 0 &&
                              emailAddress.length > 0 &&
                              cellphoneNumber.length > 0 &&
                              userName.length > 0;
 
+            // Check if the validation succeeded.
             if(validation)
             {
+                // Create a new object.
                 let userProfile = new Object();
                 userProfile.UserID = farmerID;
                 userProfile.FirstName = firstName;
@@ -157,8 +182,10 @@
                 userProfile.Gender = gender;
                 userProfile.UserName = userName;
 
+                // Perform a POST operation.
                 POST("/Employee/ManageFarmers", JSON.stringify(userProfile), [["ActionName", "UpdateFarmer"]], function (status) {
 
+                    // Check if the status is OK.
                     if(status == 1)
                     {
                         document.location.reload();
@@ -174,7 +201,7 @@
 
 <div style="margin-top: 16px;">
     <div class="content">
-        <h1>Manage Farmers</h1>
+        <h1 style="background-color: black; width: fit-content">Manage Farmers</h1>
 
         <div style="width: 100%; background-color: white; border-radius: 8px; padding: 16px">
 
@@ -239,7 +266,7 @@
 
                     <select id="farmerID">
                         
-
+                        <!-- Iterate through the collection -->
                         @foreach (var farmer in this.Model)
                         {
                             <option>@farmer.FarmerID</option>
@@ -269,6 +296,7 @@
                             <td>
                                 <select id="farmerID2">
 
+                                    <!-- Iterate through the collection -->
                                     @foreach(var farmer in this.Model)
                                     {
                                         <option>@farmer.FarmerID</option>
@@ -328,6 +356,7 @@
 
                 @if(this.Model != null)
                 {
+                    <!-- Iterate through the collection. -->
                     @foreach(var farmer in this.Model)
                     {
                         <tr>

@@ -2,8 +2,12 @@
 
 namespace AgriEnergyConnect.Models.Tables
 {
+    /// <summary>
+    /// Employee entity for the database.
+    /// </summary>
     public class Employee
     {
+        // Automatic Properties
         [Key]
         public int EmployeeID { get; set; }
         public string FirstName { get; set; }

@@ -35,18 +35,22 @@
 
     <script type="text/javascript">
     
+        // Occurs when the user selected the radio button 'Male'.
         function rbMale_onclick()
         {
             document.getElementById("genderMale").checked = true;
             document.getElementById("genderFemale").checked = false;
         }
 
+        // Occurs when the user selected the radio button 'Female'.
         function rbFemale_onclick() { 
             document.getElementById("genderMale").checked = false;
             document.getElementById("genderFemale").checked = true;
         }
 
+        // Occurs when the user clicked the 'Submit' button.
         function SubmitReg() { 
+            // Get the field data.
             let firstName = document.getElementById("txtFirstName").value;
             let lastName = document.getElementById("txtLastName").value;
             let emailAddress = document.getElementById("txtEmailAddress").value;
@@ -56,6 +60,7 @@
             let password = document.getElementById("txtPassword").value;
             let confirmedPassword = document.getElementById("txtConfirmedPassword").value;
 
+            // Perform a validation check.
             let validation = firstName.length > 0 &&
                              lastName.length > 0 &&
                              emailAddress.length > 0 &&
@@ -64,7 +69,9 @@
                 password.length == confirmedPassword.length &&
                     IsStrongPassword(password);
 
+            // Check if the validation is successful.
             if (validation) { 
+                // Create a new object.
                 let regInfo = new Object();
                 regInfo.FirstName = firstName;
                 regInfo.LastName = lastName;
@@ -76,6 +83,8 @@
                 regInfo.ConfirmedPassword = confirmedPassword;
 
                 let json_obj = JSON.stringify(regInfo);
+
+                // Perform a POST operation.
                 POST("/User/Register", json_obj, null, function(status) {
 
                     window.location = "/Home/Status?ActionName=Register&StatusCode=" + status;

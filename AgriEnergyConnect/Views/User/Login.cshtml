@@ -35,19 +35,25 @@
 
     <script type="text/javascript">
     
+        // Occurs when the user clicked the 'Sign-in' button.
         function UserLogin()
         {
+            // Get the field data.
             let userName = document.getElementById("txtUserName").value;
             let password = document.getElementById("txtPassword").value;
 
+            // Perform a validation check.
             let validation = userName.length > 0 && password.length > 0;
 
+            // Check if the validation is successful.
             if(validation)
             {
+                // Create a new object.
                 let json_obj = new Object();
                 json_obj.UserName = userName;
                 json_obj.Password = password;
 
+                // Perform a POST operation.
                 POST("/User/Login", JSON.stringify(json_obj), null, login_result);
             }
         }

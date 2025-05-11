@@ -2,6 +2,10 @@
 
 namespace AgriEnergyConnect.Models.Serializables
 {
+    /// <summary>
+    /// This class is used for serialization with JSON and is not
+    /// and entity for the database.
+    /// </summary>
     [JsonSerializable(typeof(UserRegistration))]
     public class UserRegistration
     {
