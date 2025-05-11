@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Forum";
+    ViewData["Page"] = "Forum";
 }
 
 @section Styles {
@@ -89,9 +90,23 @@
         <!-- Iterate through the array -->
         @foreach(var discussion in this.Model)
             {
+                string s = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(discussion.Content));
+
                 <div style="border-color: rgb(200, 200, 200); border-style: solid; border-width: 2px; padding: 16px">
                     <h4>@discussion.UserName</h4>
-                    <p>@discussion.Content</p>
+                    <p>
+                        @foreach(char c in s)
+                        {
+                            if(c == '\n')
+                            {
+                                <br />
+                            }
+                            else
+                            {
+                                @c
+                            }
+                        }
+                    </p>
                 </div>
             }
 

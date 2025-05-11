@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "Status";
+    ViewData["Page"] = "Status";
 
     var query = this.Context.Request.Query;
 }
@@ -53,7 +54,7 @@
 <div class="content2">
 
     <div align="center">
-        <div style="background-color: rgb(230, 230, 230); padding-left: 0px">
+                <div style="background-color: #b1a480; padding: 24px; border-bottom-width: 8px; border-bottom-color: #daca9d; border-bottom-style: solid">
                     
             @if (query["StatusCode"] == "1")
                     {
@@ -74,22 +75,44 @@
 
                         if (query["ActionName"] == "Login" && query["StatusCode"] == "1")
                         {
-                            <b>Login Successful</b>
-                            <p>
-                                Your sign-in process completed successfully.<br />
-                                <a href="/Home/Index">Return to Homepage</a>
+                            <b style="background-color: white; width: fit-content">Login Successful</b>
+                            <p style="background-color: white; width: fit-content">
+                                Your sign-in process completed successfully.
                             </p>
+                            <a href="/Home/Index">Return to Homepage</a>
 
                         }
 
                         if (query["ActionName"] == "Login" && query["StatusCode"] == "2")
                         {
-                            <b>Login Failed</b>
-                            <p>
+                            <b style="background-color: white; width: fit-content">Login Failed</b>
+                            <p style="background-color: white; width: fit-content">
                                 Please enter a valid username or password to authenticate.<br />
-                                If you do not have a user account, you can create one by
-                                <a href="/User/Register">clicking here.</a>
+                                If you do not have a user account, you can create one now.<br />
                             </p>
+
+                            <a href="/User/Register">Click here to create your user account.</a>
+                        }
+
+                        if (query["ActionName"] == "Register" && query["StatusCode"] == "1")
+                        {
+                            <b style="background-color: white; width: fit-content">Registration Successful</b>
+                            <p style="background-color: white; width: fit-content">
+                                Your registration process completed successfully.
+                            </p>
+                            <a href="/Home/Index">Return to Homepage</a>
+
+                        }
+
+                        if (query["ActionName"] == "Register" && query["StatusCode"] == "2")
+                        {
+                            <b style="background-color: white; width: fit-content">Registration Failed</b>
+                            <p style="background-color: white; width: fit-content">
+                                Please complete all the required fields and provide a strong.<br />
+                                password with a minimum of four alphabetical letters, two numerical<br />
+                                digits and two special symbols.
+                            </p>
+                            <a href="/User/Register">Try again</a>
                         }
                     }
                 </div>

@@ -14,7 +14,7 @@
         }
 
         a {
-            color: #e2c072;
+            color: #ffe6ae;
         }
 
         .text-field {
@@ -55,6 +55,10 @@
 
                 // Perform a POST operation.
                 POST("/User/Login", JSON.stringify(json_obj), null, login_result);
+            }
+            else
+            {
+                document.location = "/Home/Status?ActionName=Login&StatusCode=2";
             }
         }
 

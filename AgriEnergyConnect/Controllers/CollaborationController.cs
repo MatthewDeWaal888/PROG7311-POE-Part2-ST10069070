@@ -1,6 +1,7 @@
 ﻿using AgriEnergyConnect.Models.Tables;
 using AgriEnergyConnect.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace AgriEnergyConnect.Controllers
 {
@@ -73,7 +74,7 @@ namespace AgriEnergyConnect.Controllers
             // Create a discussion object.
             Discussion discussion = new()
             {
-                Content = content,
+                Content = Convert.ToBase64String(Encoding.UTF8.GetBytes(content)),
                 UserName = userName
             };
 
