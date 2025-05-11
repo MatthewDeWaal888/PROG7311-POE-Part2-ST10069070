@@ -93,7 +93,9 @@ namespace AgriEnergyConnect.Controllers
             int iFarmerID = Convert.ToInt32(farmerId);
             Farmer farmer = _context.Farmer.Where(p => p.FarmerID == iFarmerID).ToList()[0];
 
+            _context.Product.RemoveRange(_context.Product.Where(p => p.FarmerID == farmer.FarmerID));
             _context.Farmer.Remove(farmer);
+
             await _context.SaveChangesAsync();
         }
 

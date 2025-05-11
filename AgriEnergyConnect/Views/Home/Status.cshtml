@@ -39,9 +39,8 @@
         }
 
         a {
-            color: green;
+            color: blue;
         }
-
         
     </style>
 
@@ -75,9 +74,9 @@
 
                         if (query["ActionName"] == "Login" && query["StatusCode"] == "1")
                         {
-                            <b style="color: limegreen">Login Successful</b>
-                            <p style="color: black">
-                                You sign-in process completed successfully.<br />
+                            <b>Login Successful</b>
+                            <p>
+                                Your sign-in process completed successfully.<br />
                                 <a href="/Home/Index">Return to Homepage</a>
                             </p>
 
@@ -85,8 +84,8 @@
 
                         if (query["ActionName"] == "Login" && query["StatusCode"] == "2")
                         {
-                            <b style="color: red">Login Failed</b>
-                            <p style="color: black">
+                            <b>Login Failed</b>
+                            <p>
                                 Please enter a valid username or password to authenticate.<br />
                                 If you do not have a user account, you can create one by
                                 <a href="/User/Register">clicking here.</a>

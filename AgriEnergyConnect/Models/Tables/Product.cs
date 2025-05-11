@@ -9,7 +9,7 @@ namespace AgriEnergyConnect.Models.Tables
         public int FarmerID { get; set; }
         public string? Name { get; set; }
         public string? Category { get; set; }
-        public DateTime ProductionDate { get; set; }
+        public string? ProductionDate { get; set; }
         public string? ProductType { get; set; }
     }
 }
