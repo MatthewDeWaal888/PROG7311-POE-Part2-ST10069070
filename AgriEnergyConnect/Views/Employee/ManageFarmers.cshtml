@@ -207,7 +207,7 @@
         // Occurs when the user selects a farmer id from the drop-down list.
         function SelectFarmer()
         {
-            let farmerId = document.getElementById("farmerID").value;
+            let farmerId = document.getElementById("farmerID2").value;
 
             if (farmerId != EMPTY_STRING) {
                 let jsonData = document.getElementById("FARMER-" + farmerId).value;
@@ -223,9 +223,11 @@
 
                 if (gender == "M") {
                     document.getElementById("rbMale2").checked = true;
+                    document.getElementById("rbFemale2").checked = false;
                 }
 
                 if (gender == "F") {
+                    document.getElementById("rbMale2").checked = false;
                     document.getElementById("rbFemale2").checked = true;
                 }
 

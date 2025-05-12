@@ -276,7 +276,7 @@
                             </tr>
 
                         <!-- Iterate through the collection. -->
-                        @foreach(var product in this.Model.p)
+                        @foreach(var product in this.Model.p.Where(i => i.FarmerID == farmerObj.FarmerID))
                         {
                             var farmer = farmerList.ToArray()[Utils.FindFarmer(product.FarmerID, farmerList)];
 

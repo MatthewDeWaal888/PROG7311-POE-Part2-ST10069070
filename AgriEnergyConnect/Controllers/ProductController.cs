@@ -87,7 +87,7 @@ namespace AgriEnergyConnect.Controllers
                     FarmerID = farmerId,
                     Name = productInfo.Name,
                     Category = productInfo.Category,
-                    ProductionDate = productInfo.ProductionDate,
+                    ProductionDate = DateTime.TryParse(productInfo.ProductionDate, out DateTime d) ? d : DateTime.Now,
                     ProductType = productInfo.ProductType
                 };
 
@@ -129,6 +129,38 @@ namespace AgriEnergyConnect.Controllers
         /// <returns></returns>
         private ProductTable[] FilterProduct()
         {
+            // Checks if dt1 contains dt2.
+            bool containsDateTime(DateTime? dt1, DateTime? dt2, bool dateIncluded, bool timeIncluded)
+            {
+                // The full date-time of dt1.
+                string? dt1Str = dt1?.ToString();
+
+                // The date part of dt2.
+                string? dt2DateStr = dt2?.ToString("yyyy/MM/dd");
+                // The time part of dt2.
+                string? dt2TimeStr = dt2?.ToString("HH:mm:ss");
+
+                bool result = false;
+
+                // Checks if the user provided date and time.
+                if(dateIncluded && timeIncluded)
+                {
+                    result = dt1Str.Contains(dt2DateStr) && dt1Str.Contains(dt2TimeStr);
+                }
+                // Checks if the user provided the date only.
+                else if(dateIncluded && !timeIncluded)
+                {
+                    result = dt1Str.Contains(dt2DateStr);
+                }
+                // Checks if the user provided the time only.
+                else if(!dateIncluded && timeIncluded)
+                {
+                    result = dt1Str.Contains(dt2TimeStr);
+                }
+
+                return result;
+            }
+
             // Declare a new List.
             var results = new List<ProductTable>();
             // Alias given to 'this.Request.Query'.
@@ -151,9 +183,29 @@ namespace AgriEnergyConnect.Controllers
                         results.Add(product);
                     }
                     // Check if the URL contains the 'ProductionDate' parameter.
-                    else if (query.ContainsKey("ProductionDate") && product.ProductionDate.Contains(query["ProductionDate"].ToString().ToLower()))
+                    else if (query.ContainsKey("ProductionDate"))
                     {
-                        results.Add(product);
+                        // Check if the ProductionDate filter contains a date range.
+                        if (query["ProductionDate"].ToString().Contains(";"))
+                        {
+                            // Get the parts of the date range.
+                            string[] parts = query["ProductionDate"].ToString().Split(';');
+
+                            // Check if the array contains two parts and if the two parts can be parsed to a DateTime object.
+                            if (parts.Count() == 2 && DateTime.TryParse(parts[0], out DateTime part1) && DateTime.TryParse(parts[1], out DateTime part2))
+                            {
+                                // Check if the ProductionDate of the product variable is within the date range.
+                                if(product.ProductionDate >= part1 && product.ProductionDate <= part2)
+                                {
+                                    results.Add(product);
+                                }
+                            }
+                        }
+                        // The ProductionDate filter does not contain a date range.
+                        else if (DateTime.TryParse(query["ProductionDate"].ToString(), out DateTime d) && containsDateTime(product.ProductionDate, d, query["ProductionDate"].ToString().Contains("/"), query["ProductionDate"].ToString().Contains(":")))
+                        {
+                            results.Add(product);
+                        }
                     }
                     // Check if the URL contains the 'ProductType' parameter.
                     else if (query.ContainsKey("ProductType") && product.ProductType.ToLower().Contains(query["ProductType"].ToString().ToLower()))

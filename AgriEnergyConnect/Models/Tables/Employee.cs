@@ -10,12 +10,19 @@ namespace AgriEnergyConnect.Models.Tables
         // Automatic Properties
         [Key]
         public int EmployeeID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string EmailAddress { get; set; }
-        public string CellphoneNumber { get; set; }
-        public string Gender { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        [StringLength(120)]
+        public string? FirstName { get; set; }
+        [StringLength(120)]
+        public string? LastName { get; set; }
+        [StringLength(255)]
+        public string? EmailAddress { get; set; }
+        [StringLength(120)]
+        public string? CellphoneNumber { get; set; }
+        [StringLength(1)]
+        public string? Gender { get; set; }
+        [StringLength(120)]
+        public string? UserName { get; set; }
+        [StringLength(255)]
+        public string? Password { get; set; }
     }
 }

@@ -11,9 +11,12 @@ namespace AgriEnergyConnect.Models.Tables
         [Key]
         public int ProductID { get; set; }
         public int FarmerID { get; set; }
+        [StringLength(120)]
         public string? Name { get; set; }
+        [StringLength(120)]
         public string? Category { get; set; }
-        public string? ProductionDate { get; set; }
+        public DateTime? ProductionDate { get; set; }
+        [StringLength(120)]
         public string? ProductType { get; set; }
     }
 }
