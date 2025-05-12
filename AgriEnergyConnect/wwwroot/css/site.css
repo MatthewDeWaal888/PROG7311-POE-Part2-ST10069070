@@ -61,3 +61,19 @@ h1 {
     width: 130px;
     height: 38px;
 }
+
+#aec-intro {
+    width: 600px;
+    background-color: white;
+    border-radius: 16px;
+    padding: 16px;
+}
+
+/* Responsive Design */
+
+@media only screen and (max-width: 600px)
+{
+    #aec-intro {
+        width: 460px;
+    }
+}
