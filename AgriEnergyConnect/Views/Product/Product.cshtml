@@ -4,6 +4,7 @@
     ViewData["Title"] = "Product";
     ViewData["Page"] = "Product";
 
+    // Global variable
     dynamic? userInfo = (dynamic?)Global.UserInfo;
 }
 
@@ -166,11 +167,13 @@
             }
         }
 
+        // Occurs when the user clicks the Cancel button.
         function CancelFilter()
         {
             document.getElementById("filter-product").hidden = true;
         }
         
+        // Occurs when the user clicks the Clear button.
         function ClearFilter()
         {
             document.location = "/Product/Product";
@@ -194,6 +197,7 @@
 
                     <hr style="color: #333333; height: 3px" />
 
+                    <!-- Begin Filter Product section-->
                     <div id="filter-product" style="color: black" hidden>
 
                     <h4>Filter Products</h4>
@@ -231,40 +235,7 @@
 
                     <hr style="color: #333333; height: 3px" />
                 </div>
-
-                <div id="filter-product" hidden>
-
-                    <div style="width: fit-content; color: black">
-                        <table style="width: 100%">
-
-                            <tr>
-                                <th>Name:</th>
-                                <td><input id="txtProductName2" type="text" value="" /></td>
-                            </tr>
-                            <tr>
-                                <th>Category:</th>
-                                <td><input id="txtCategory2" type="text" value="" /></td>
-                            </tr>
-                            <tr>
-                                <th>Production Date:</th>
-                                <td><input id="txtProductionDate2" type="text" value="" /></td>
-                            </tr>
-                            <tr>
-                                <th>Product Type:</th>
-                                <td><input id="txtProductType2" type="text" value="" /></td>
-                            </tr>
-                        </table>
-                        <div align="right" style="width: 410px">
-                            <button onclick="SubmitFilter()">Submit</button>
-                            <button onclick="CancelFilter()">Cancel</button>
-                        </div>
-
-
-                    </div>
-
-                    <hr style="color: #333333; height: 3px" />
-                </div>
-
+                <!-- End Filter Product section -->
 
                 <div align="center" style="color: black">
                     <h4>Products from Agri-Energy Connect</h4>
@@ -301,9 +272,9 @@
         }
         else
         {
-            <h1>Manage Your Products</h1>
+            <h1 style="background-color: white; color: black; width: fit-content; padding: 4px; border-radius: 8px">Manage Your Products</h1>
 
-            <div style="margin-top: 32px; background-color: #FAFAFA; border-radius: 16px; padding: 16px">
+            <div style="margin-top: 16px; background-color: #FAFAFA; border-radius: 16px; padding: 16px">
 
                 <div style="padding: 8px">
                     <button class="btn-class btn-small" onclick="AddProduct()">Add</button>
@@ -314,37 +285,57 @@
 
                 <hr style="color: #333333; height: 3px" />
 
+                <!-- Begin Add Product section -->
                 <div id="add-product" style="color: black" hidden>
+
+                    <h4>Add Product</h4>
+
+                    <p>
+                        Complete all the required fields to add a new product.
+                    </p>
+
+                    <div style="width: fit-content">
                     <table style="width: 500px">
                         <tr>
-                            <th>Product Name:</th>
-                            <td><input id="txtProductName" type="text" value="" /></td>
+                            <th>Product Name: *</th>
+                            <td><input id="txtProductName" type="text" value="" style="width: 100%" /></td>
                         </tr>
                         <tr>
-                            <th>Category:</th>
-                            <td><input id="txtCategory" type="text" value="" /></td>
+                            <th>Category: *</th>
+                            <td><input id="txtCategory" type="text" value="" style="width: 100%" /></td>
                         </tr>
                         <tr>
-                            <th>Production Date:</th>
-                            <td><input id="txtProductionDate" type="text" value="" /></td>
+                            <th>Production Date: *</th>
+                            <td><input id="txtProductionDate" type="text" value="" style="width: 100%" /></td>
                         </tr>
                         <tr>
-                            <th>Product Type:</th>
-                            <td><input id="txtProductType" type="text" value="" /></td>
+                            <th>Product Type: *</th>
+                            <td><input id="txtProductType" type="text" value="" style="width: 100%" /></td>
                         </tr>
                     </table>
 
-                    <div align="right" style="width: 410px">
-                        <button onclick="SubmitProduct()">Add Product</button>
-                        <button onclick="CancelAddProduct()">Cancel</button>
+                    <div align="right" style="margin-top: 16px">
+                        <button class="btn-class3" onclick="SubmitProduct()">Add Product</button>
+                        <button class="btn-class3" onclick="CancelAddProduct()">Cancel</button>
+                    </div>
                     </div>
 
                     <hr style="color: #333333; height: 3px" />
                 </div>
+                <!-- End Add Product section -->
 
+                <!-- Begin Remove Product section -->
                 <div id="remove-product" style="color: black" hidden>
-                    <b>Product ID: </b>
-                    <select id="product">
+                    
+                    <h4>Remove Product</h4>
+
+                    <p>
+                        Please select a product id to remove:
+                    </p>
+
+                    <div style="width: fit-content">
+                    <b>Product ID: *</b>
+                    <select id="product" style="margin-left: 100px; width: 160px">
 
                         @foreach(var product in this.Model.p)
                         {
@@ -354,37 +345,48 @@
                     </select>
                     <br />
 
-                    <div align="right">
-                        <button onclick="RequestProductRemoval()">Remove</button>
-                        <button onclick="CancelProductRemoval()">Cancel</button>
+                    <div align="right" style="margin-top: 16px">
+                        <button class="btn-class2" onclick="RequestProductRemoval()">Remove</button>
+                        <button class="btn-class2" onclick="CancelProductRemoval()">Cancel</button>
                     </div>
-                </div>
+                    </div>
 
-                <div id="filter-product" hidden>
+                    <hr style="color: #333333; height: 3px" />
+                </div>
+                <!-- End Remove Product section -->
+
+                <!-- Begin Filter Product section -->
+                <div id="filter-product" style="color: black" hidden>
+
+                    <h4>Filter Products</h4>
+
+                    <p>
+                        Complete at least one field to begin the filter process.
+                    </p>
 
                     <div style="width: fit-content; color: black">
-                        <table style="width: 100%">
+                        <table style="width: 430px" cellpadding="4">
 
                             <tr>
                                 <th>Name:</th>
-                                <td><input id="txtProductName2" type="text" value="" /></td>
+                                <td><input id="txtProductName2" type="text" value="" style="width: 100%" /></td>
                             </tr>
                             <tr>
                                 <th>Category:</th>
-                                <td><input id="txtCategory2" type="text" value="" /></td>
+                                <td><input id="txtCategory2" type="text" value="" style="width: 100%" /></td>
                             </tr>
                             <tr>
                                 <th>Production Date:</th>
-                                <td><input id="txtProductionDate2" type="text" value="" /></td>
+                                <td><input id="txtProductionDate2" type="text" value="" style="width: 100%" /></td>
                             </tr>
                             <tr>
                                 <th>Product Type:</th>
-                                <td><input id="txtProductType2" type="text" value="" /></td>
+                                <td><input id="txtProductType2" type="text" value="" style="width: 100%" /></td>
                             </tr>
                         </table>
-                        <div align="right" style="width: 410px">
-                            <button onclick="SubmitFilter()">Submit</button>
-                            <button onclick="CancelFilter()">Cancel</button>
+                        <div align="right" style="margin-top: 16px">
+                            <button class="btn-class2" onclick="SubmitFilter()">Submit</button>
+                            <button class="btn-class2" onclick="CancelFilter()">Cancel</button>
                         </div>
 
 
@@ -392,6 +394,12 @@
 
                     <hr style="color: #333333; height: 3px" />
                 </div>
+                <!-- End Filter Product section -->
+
+                <div align="center" style="color: black">
+                    <h4>Products from Agri-Energy Connect</h4>
+                </div>
+                <hr style="color: #333333; height: 3px" />
 
                 <table style="width: 100%; color: black">
 
