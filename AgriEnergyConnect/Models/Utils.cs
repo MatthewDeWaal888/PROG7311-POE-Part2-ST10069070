@@ -25,7 +25,7 @@ namespace AgriEnergyConnect.Models
         /// <param name="userName">The username of the employee.</param>
         /// <param name="employees">A collection of employees.</param>
         /// <returns></returns>
-        public static bool EmployeeExists(string userName, DbSet<Employee> employees)
+        public static bool EmployeeExists(string userName, Employee[] employees)
         {
             // Boolean variable.
             bool foundItem = false;
@@ -51,7 +51,7 @@ namespace AgriEnergyConnect.Models
         /// <param name="userName">The username of the farmer.</param>
         /// <param name="farmers">A collection of farmers.</param>
         /// <returns></returns>
-        public static bool FarmerExists(string userName, DbSet<Farmer> farmers)
+        public static bool FarmerExists(string userName, Farmer[] farmers)
         {
             // Boolean variable.
             bool foundItem = false;
@@ -77,7 +77,7 @@ namespace AgriEnergyConnect.Models
         /// <param name="userName">The username of the employee.</param>
         /// <param name="employees">A collection of employees.</param>
         /// <returns></returns>
-        public static int FindEmployee(string userName, DbSet<Employee> employees)
+        public static int FindEmployee(string userName, Employee[] employees)
         {
             // Variable declarations
             var index = -1;
@@ -104,7 +104,7 @@ namespace AgriEnergyConnect.Models
         /// <param name="userName">The username of the farmer.</param>
         /// <param name="farmers">A collection of farmers.</param>
         /// <returns></returns>
-        public static int FindFarmer(string userName, DbSet<Farmer> farmers)
+        public static int FindFarmer(string userName, Farmer[] farmers)
         {
             // Variable declarations.
             var index = -1;
@@ -131,7 +131,7 @@ namespace AgriEnergyConnect.Models
         /// <param name="userName">The farmer ID from the database.</param>
         /// <param name="farmers">A collection of farmers.</param>
         /// <returns></returns>
-        public static int FindFarmer(int farmerID, DbSet<Farmer> farmers)
+        public static int FindFarmer(int farmerID, Farmer[] farmers)
         {
             // Variable declarations
             var index = -1;

@@ -54,16 +54,16 @@
                 json_obj.Password = password;
 
                 // Perform a POST operation.
-                POST("/User/Login", JSON.stringify(json_obj), null, login_result);
+                POST("/User/Login", JSON.stringify(json_obj), null, function(status) {
+
+                    window.location = "/Home/Status?ActionName=Login&StatusCode=" + status;
+
+                });
             }
             else
             {
                 document.location = "/Home/Status?ActionName=Login&StatusCode=2";
             }
-        }
-
-        function login_result(status) { 
-            window.location = "/Home/Status?ActionName=Login&StatusCode=" + status;
         }
         
     </script>

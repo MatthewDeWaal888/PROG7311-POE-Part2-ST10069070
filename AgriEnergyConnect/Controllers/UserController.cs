@@ -93,12 +93,12 @@ namespace AgriEnergyConnect.Controllers
             if(userName != null && password != null)
             {
                 // Find the employee within the database.
-                int userIndex = Utils.FindEmployee(userName, _context.Employee);
+                int userIndex = Utils.FindEmployee(userName, _context.Employee.ToArray());
                 isEmployee = userIndex != -1;
 
                 // Check if the user is a farmer.
                 if (!isEmployee)
-                    userIndex = Utils.FindFarmer(userName, _context.Farmer);
+                    userIndex = Utils.FindFarmer(userName, _context.Farmer.ToArray());
 
                 bool userExists = userIndex != -1;
 
@@ -179,7 +179,7 @@ namespace AgriEnergyConnect.Controllers
             UserRegistration? regInfo = JsonConvert.DeserializeObject<UserRegistration>(content);
 
             // Validation
-            if (regInfo != null && !Utils.EmployeeExists(regInfo.UserName, _context.Employee))
+            if (regInfo != null && !Utils.EmployeeExists(regInfo.UserName, _context.Employee.ToArray()))
             {
                 // Declare and instantiate an Employee object.
                 Employee employee = new()

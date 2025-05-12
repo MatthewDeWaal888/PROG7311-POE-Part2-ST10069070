@@ -6,6 +6,8 @@
 
     // Global variable
     dynamic? userInfo = (dynamic?)Global.UserInfo;
+
+    var farmerList = this.Model.c.Farmer.ToArray();
 }
 
 @section Styles {
@@ -13,14 +15,14 @@
     <style type="text/css">
 
         .content {
-            color: #f0f0f0;
+        color: #f0f0f0;
         }
 
         #background {
-            background-image: url('../images/wheat-farm.png');
-            background-size: 100%;
+        background-image: url('../images/wheat-farm.png');
+        background-size: 100%;
         }
-        
+
     </style>
 
 }
@@ -28,155 +30,170 @@
 @section Scripts {
 
     <script type="text/javascript">
-    
+
         // Occurs when the user clicked the 'Add Product' button.
         function AddProduct()
         {
-            document.getElementById("add-product").hidden = false;
-            document.getElementById("remove-product").hidden = true;
-            document.getElementById("filter-product").hidden = true;
+        document.getElementById("add-product").hidden = false;
+        document.getElementById("remove-product").hidden = true;
+        document.getElementById("filter-product").hidden = true;
         }
 
         // Occurs when the user clicked the 'Cancel' button.
         function CancelAddProduct() { 
-            document.getElementById("add-product").hidden = true;
+        document.getElementById("add-product").hidden = true;
         }
 
         // Occurs when the user clicked the 'Remove' button.
         function RemoveProduct() {
-            document.getElementById("add-product").hidden = true;
-            document.getElementById("remove-product").hidden = false;
-            document.getElementById("filter-product").hidden = true;
+        document.getElementById("add-product").hidden = true;
+        document.getElementById("remove-product").hidden = false;
+        document.getElementById("filter-product").hidden = true;
         }
 
         // Occurs when the user clicked the 'Submit' button.
         function SubmitProduct() { 
-            // Get the field data.
-            let productName = document.getElementById("txtProductName").value;
-            let category = document.getElementById("txtCategory").value;
-            let productionDate = document.getElementById("txtProductionDate").value;
-            let productType = document.getElementById("txtProductType").value;
-            
-            // Perform a validation check.
-            let validation = productName.length > 0 &&
-                             category.length > 0 &&
-                             productionDate.length > 0 &&
-                             productType.length > 0;
-            
-            // Check if the validation succeeded.
-            if(validation)
-            {
-                // Create a new object.
-                let product = new Object();
-                product.Name = productName;
-                product.Category = category;
-                product.ProductionDate = productionDate;
-                product.ProductType = productType;
+        // Get the field data.
+        let productName = document.getElementById("txtProductName").value;
+        let category = document.getElementById("txtCategory").value;
+        let productionDate = document.getElementById("txtProductionDate").value;
+        let productType = document.getElementById("txtProductType").value;
 
-                // Perform a POST operation.
-                POST("/Product/Product", JSON.stringify(product), [["ActionName", "AddProduct"]], function (status) {
+        // Perform a validation check.
+        let validation = productName.length > 0 &&
+        category.length > 0 &&
+        productionDate.length > 0 &&
+        productType.length > 0;
 
-                    // Check if the status is OK.
-                    if (status == 1) { 
-                        document.location.reload();
-                    }
+        // Check if the validation succeeded.
+        if(validation)
+        {
+        // Create a new object.
+        let product = new Object();
+        product.Name = productName;
+        product.Category = category;
+        product.ProductionDate = productionDate;
+        product.ProductType = productType;
 
-                });
-            }
+        // Perform a POST operation.
+        POST("/Product/Product", JSON.stringify(product), [["ActionName", "AddProduct"]], function (status) {
+
+        // Check if the status is OK.
+        if (status == 1) { 
+        document.location.reload();
+        }
+
+        });
+        }
         }
 
         // Occurs when the user clicked the 'Remove Product' button.
         function RequestProductRemoval()
         {
-            // Obtain the product id.
-            let productId = document.getElementById("product").value;
+        // Obtain the product id.
+        let productId = document.getElementById("product").value;
 
-            if(productId.length > 0)
-            {
-                // Perform a POST operation.
-                POST("/Product/Product", productId, [["ActionName", "RemoveProduct"]], function (status) {
+        if(productId.length > 0)
+        {
+        // Perform a POST operation.
+        POST("/Product/Product", productId, [["ActionName", "RemoveProduct"]], function (status) {
 
-                    // Check if the status is OK.
-                    if(status == 1)
-                    {
-                        document.location.reload();
-                    }
-                });
-            }
+        // Check if the status is OK.
+        if(status == 1)
+        {
+        document.location.reload();
+        }
+        });
+        }
         }
 
         // Occurs when the user clicked the 'Cancel' button.
         function CancelProductRemoval() {
-            document.getElementById("add-product").hidden = true;
-            document.getElementById("remove-product").hidden = true;
+        document.getElementById("add-product").hidden = true;
+        document.getElementById("remove-product").hidden = true;
         }
 
         // Occurs when the user clicked the 'Filter Products' button.
         function FilterProducts(mode) {
-            if(mode == 0)
-            {
-                document.getElementById("filter-product").hidden = false;
-            }
+        if(mode == 0)
+        {
+        document.getElementById("filter-product").hidden = false;
+        }
 
-            if (mode == 1) {
-                document.getElementById("add-product").hidden = true;
-                document.getElementById("remove-product").hidden = true;
-                document.getElementById("filter-product").hidden = false;
-            }
+        if (mode == 1) {
+        document.getElementById("add-product").hidden = true;
+        document.getElementById("remove-product").hidden = true;
+        document.getElementById("filter-product").hidden = false;
+        }
         }
 
         // Occurs when the user clicked the 'Submit' button.
         function SubmitFilter() { 
-            // Obtain the field data.
-            let productName = document.getElementById("txtProductName2").value;
-            let productCategory = document.getElementById("txtCategory2").value;
-            let productionDate = document.getElementById("txtProductionDate2").value;
-            let productType = document.getElementById("txtProductType2").value;
+        // Obtain the field data.
+        let productName = document.getElementById("txtProductName2").value;
+        let productCategory = document.getElementById("txtCategory2").value;
+        let productionDate = document.getElementById("txtProductionDate2").value;
+        let productType = document.getElementById("txtProductType2").value;
 
-            // Declare a query string.
-            let queryString = EMPTY_STRING;
-            let containsField = false;
+        // Declare a query string.
+        let queryString = EMPTY_STRING;
+        let containsField = false;
 
-            if(productName.length > 0)
-            {
-                queryString += "&ProductName=" + productName;
-                containsField = true;
-            }
+        if(productName.length > 0)
+        {
+        queryString += "&ProductName=" + productName;
+        containsField = true;
+        }
 
-            if(productCategory.length > 0)
-            {
-                queryString += "&ProductCategory=" + productCategory;
-                containsField = true;
-            }
+        if(productCategory.length > 0)
+        {
+        queryString += "&ProductCategory=" + productCategory;
+        containsField = true;
+        }
 
-            if(productionDate.length > 0)
-            {
-                queryString += "&ProductionDate=" + productionDate;
-                containsField = true;
-            }
+        if(productionDate.length > 0)
+        {
+        queryString += "&ProductionDate=" + productionDate;
+        containsField = true;
+        }
 
-            if(productType.length > 0)
-            {
-                queryString += "&ProductType=" + productType;
-                containsField = true;
-            }
+        if(productType.length > 0)
+        {
+        queryString += "&ProductType=" + productType;
+        containsField = true;
+        }
 
-            if (containsField) {
-                // Refresh the page with the query string.
-                document.location = "/Product/Product?" + queryString.substring(1, queryString.length);
-            }
+        if (containsField) {
+        // Refresh the page with the query string.
+        document.location = "/Product/Product?" + queryString.substring(1, queryString.length);
+        }
         }
 
         // Occurs when the user clicks the Cancel button.
         function CancelFilter()
         {
-            document.getElementById("filter-product").hidden = true;
+        document.getElementById("filter-product").hidden = true;
         }
-        
+
         // Occurs when the user clicks the Clear button.
         function ClearFilter()
         {
-            document.location = "/Product/Product";
+        document.location = "/Product/Product";
+        }
+
+        function expandView(farmerID)
+        {
+            let farmerProducts = document.getElementById("FARMER_PRODUCTS-" + farmerID);
+            farmerProducts.hidden = !farmerProducts.hidden;
+
+            if(farmerProducts.hidden)
+            {
+                document.getElementById("FARMER_PRODUCTS_IMG-" + farmerID).setAttribute("src", "../images/expand-icon.png");
+            }
+            else
+            {
+                document.getElementById("FARMER_PRODUCTS_IMG-" + farmerID).setAttribute("src", "../images/collapse-icon.png");
+            }
         }
 
     </script>
@@ -192,13 +209,13 @@
 
             <div style="margin-top: 16px; background-color: #FAFAFA; border-radius: 16px; padding: 16px">
 
-                    <button class="btn-class btn-small" onclick="FilterProducts(0)">Filter Products</button>
-                    <button class="btn-class btn-small" onclick="ClearFilter()">Clear Filter</button>
+                <button class="btn-class btn-small" onclick="FilterProducts(0)">Filter Products</button>
+                <button class="btn-class btn-small" onclick="ClearFilter()">Clear Filter</button>
 
-                    <hr style="color: #333333; height: 3px" />
+                <hr style="color: #333333; height: 3px" />
 
-                    <!-- Begin Filter Product section-->
-                    <div id="filter-product" style="color: black" hidden>
+                <!-- Begin Filter Product section -->
+                <div id="filter-product" style="color: black" hidden>
 
                     <h4>Filter Products</h4>
 
@@ -242,31 +259,40 @@
                 </div>
                 <hr style="color: #333333; height: 3px" />
 
-                <table style="width: 100%; color: black">
-
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Category</th>
-                        <th>Production Date</th>
-                        <th>Type</th>
-                        <th>Farmer</th>
-                    </tr>
-
-                <!-- Iterate through the collection. -->
-                @foreach(var product in this.Model.p)
+                @foreach(var farmerObj in farmerList)
                 {
-                    var farmer = this.Model.c.Farmer.ToArray()[Utils.FindFarmer(product.FarmerID, this.Model.c.Farmer)];
+                    <div style="border-color: black; border-width: 2px; border-style: solid; color: black">
 
-                    <tr>
-                        <td>@product.Name</td>
-                        <td>@product.Category</td>
-                        <td>@product.ProductionDate</td>
-                        <td>@product.ProductType</td>
-                        <td>@farmer.FirstName @farmer.LastName</td>
-                    </tr>
+                        <img id="FARMER_PRODUCTS_IMG-@farmerObj.FarmerID" src="../images/collapse-icon.png" style="width: 32px; height: 32px" onclick="expandView(@farmerObj.FarmerID)" /><b style="margin-left: 16px">@farmerObj.FirstName @farmerObj.LastName</b>
+
+                        <table id="FARMER_PRODUCTS-@farmerObj.FarmerID" style="width: 100%; color: black">
+
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Production Date</th>
+                                <th>Type</th>
+                                <th>Farmer</th>
+                            </tr>
+
+                        <!-- Iterate through the collection. -->
+                        @foreach(var product in this.Model.p)
+                        {
+                            var farmer = farmerList.ToArray()[Utils.FindFarmer(product.FarmerID, farmerList)];
+
+                            <tr>
+                                <td>@product.Name</td>
+                                <td>@product.Category</td>
+                                <td>@product.ProductionDate</td>
+                                <td>@product.ProductType</td>
+                                <td>@farmer.FirstName @farmer.LastName</td>
+                            </tr>
+                        }
+
+                        </table>
+
+                    </div>
                 }
-
-                </table>
 
             </div>
         }
@@ -414,7 +440,7 @@
                     <!-- Iterate through the collection. -->
                     @foreach (var product in this.Model.p.Where(i => i.FarmerID == userInfo?.UserID))
                     {
-                        var farmer = this.Model.c.Farmer.ToArray()[Utils.FindFarmer(product.FarmerID, this.Model.c.Farmer)];
+                        var farmer = this.Model.c.Farmer.ToArray()[Utils.FindFarmer(product.FarmerID, farmerList)];
                        
                         <tr>
                             <td>@product.Name</td>

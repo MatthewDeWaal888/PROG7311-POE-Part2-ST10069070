@@ -95,7 +95,7 @@ namespace AgriEnergyConnect.Controllers
             UserRegistration? regInfo = JsonConvert.DeserializeObject<UserRegistration>(content);
 
             // Validation: Check if the regInfo is not null and if the farmer does not exist.
-            if(regInfo != null && !Utils.FarmerExists(regInfo.UserName, _context.Farmer))
+            if(regInfo != null && !Utils.FarmerExists(regInfo.UserName, _context.Farmer.ToArray()))
             {
                 // Create a Farmer object.
                 Farmer farmer = new()
