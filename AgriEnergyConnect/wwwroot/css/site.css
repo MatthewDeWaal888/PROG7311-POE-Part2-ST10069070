@@ -49,6 +49,10 @@ h1 {
         color: black;
     }
 
+.btn-class2 {
+    width: 100px;
+}
+
 .btn-small {
     width: 130px;
     height: 38px;

@@ -111,10 +111,17 @@
         }
 
         // Occurs when the user clicked the 'Filter Products' button.
-        function FilterProducts() {
-            document.getElementById("add-product").hidden = true;
-            document.getElementById("remove-product").hidden = true;
-            document.getElementById("filter-product").hidden = false;
+        function FilterProducts(mode) {
+            if(mode == 0)
+            {
+                document.getElementById("filter-product").hidden = false;
+            }
+
+            if (mode == 1) {
+                document.getElementById("add-product").hidden = true;
+                document.getElementById("remove-product").hidden = true;
+                document.getElementById("filter-product").hidden = false;
+            }
         }
 
         // Occurs when the user clicked the 'Submit' button.
@@ -127,29 +134,36 @@
 
             // Declare a query string.
             let queryString = EMPTY_STRING;
+            let containsField = false;
 
             if(productName.length > 0)
             {
                 queryString += "&ProductName=" + productName;
+                containsField = true;
             }
 
             if(productCategory.length > 0)
             {
                 queryString += "&ProductCategory=" + productCategory;
+                containsField = true;
             }
 
             if(productionDate.length > 0)
             {
                 queryString += "&ProductionDate=" + productionDate;
+                containsField = true;
             }
 
             if(productType.length > 0)
             {
                 queryString += "&ProductType=" + productType;
+                containsField = true;
             }
 
-            // Refresh the page with the query string.
-            document.location = "/Product/Product?" + queryString.substring(1, queryString.length);
+            if (containsField) {
+                // Refresh the page with the query string.
+                document.location = "/Product/Product?" + queryString.substring(1, queryString.length);
+            }
         }
 
         function CancelFilter()
@@ -171,18 +185,54 @@
 
         @if(Global.IsEmployee)
         {
-            <h1>Browse Products</h1>
+            <h1 style="background-color: white; color: black; width: fit-content; padding: 4px; border-radius: 8px">Browse Products</h1>
 
-            <div style="margin-top: 32px; background-color: white; border-radius: 16px; padding: 16px">
+            <div style="margin-top: 16px; background-color: #FAFAFA; border-radius: 16px; padding: 16px">
 
-                @if (Global.IsEmployee)
-                {
-                    <button class="btn-class btn-small" onclick="FilterProducts()">Filter Products</button>
+                    <button class="btn-class btn-small" onclick="FilterProducts(0)">Filter Products</button>
                     <button class="btn-class btn-small" onclick="ClearFilter()">Clear Filter</button>
 
                     <hr style="color: #333333; height: 3px" />
 
-                    <div id="filter-product" hidden>
+                    <div id="filter-product" style="color: black" hidden>
+
+                    <h4>Filter Products</h4>
+
+                    <p>
+                        Complete at least one field to begin the filter process.
+                    </p>
+
+                    <div style="width: fit-content; color: black">
+                        <table style="width: 430px" cellpadding="4">
+
+                            <tr>
+                                <th>Name:</th>
+                                <td><input id="txtProductName2" type="text" value="" style="width: 100%" /></td>
+                            </tr>
+                            <tr>
+                                <th>Category:</th>
+                                <td><input id="txtCategory2" type="text" value="" style="width: 100%" /></td>
+                            </tr>
+                            <tr>
+                                <th>Production Date:</th>
+                                <td><input id="txtProductionDate2" type="text" value="" style="width: 100%" /></td>
+                            </tr>
+                            <tr>
+                                <th>Product Type:</th>
+                                <td><input id="txtProductType2" type="text" value="" style="width: 100%" /></td>
+                            </tr>
+                        </table>
+                        <div align="right" style="margin-top: 16px">
+                            <button class="btn-class2" onclick="SubmitFilter()">Submit</button>
+                            <button class="btn-class2" onclick="CancelFilter()">Cancel</button>
+                        </div>
+
+                    </div>
+
+                    <hr style="color: #333333; height: 3px" />
+                </div>
+
+                <div id="filter-product" hidden>
 
                     <div style="width: fit-content; color: black">
                         <table style="width: 100%">
@@ -209,12 +259,17 @@
                             <button onclick="CancelFilter()">Cancel</button>
                         </div>
 
-                        
+
                     </div>
 
-                        <hr style="color: #333333; height: 3px" />
+                    <hr style="color: #333333; height: 3px" />
                 </div>
-                }
+
+
+                <div align="center" style="color: black">
+                    <h4>Products from Agri-Energy Connect</h4>
+                </div>
+                <hr style="color: #333333; height: 3px" />
 
                 <table style="width: 100%; color: black">
 
@@ -248,12 +303,12 @@
         {
             <h1>Manage Your Products</h1>
 
-            <div style="margin-top: 32px; background-color: white; border-radius: 16px; padding: 16px">
+            <div style="margin-top: 32px; background-color: #FAFAFA; border-radius: 16px; padding: 16px">
 
                 <div style="padding: 8px">
                     <button class="btn-class btn-small" onclick="AddProduct()">Add</button>
                     <button class="btn-class btn-small" onclick="RemoveProduct()">Remove</button>
-                    <button class="btn-class btn-small" onclick="FilterProducts()">Filter Products</button>
+                    <button class="btn-class btn-small" onclick="FilterProducts(1)">Filter Products</button>
                     <button class="btn-class btn-small" onclick="ClearFilter()">Clear Filter</button>
                 </div>
 

@@ -48,6 +48,9 @@
             document.getElementById("add-farmer").hidden = true;
             document.getElementById("remove-farmer").hidden = true;
             document.getElementById("update-farmer").hidden = false;
+
+            // Perform a SelectFarmer operation.
+            SelectFarmer();
         }
 
         // Occurs when the user clicks the 'Submit' button.
@@ -196,15 +199,56 @@
             }
         }
 
+        function CancelUpdate()
+        {
+            document.getElementById("update-farmer").hidden = true;
+        }
+
+        // Occurs when the user selects a farmer id from the drop-down list.
+        function SelectFarmer()
+        {
+            let farmerId = document.getElementById("farmerID").value;
+
+            if (farmerId != EMPTY_STRING) {
+                let jsonData = document.getElementById("FARMER-" + farmerId).value;
+
+                let farmer = JSON.parse(jsonData);
+
+                document.getElementById("txtFirstName2").value = farmer.FirstName;
+                document.getElementById("txtLastName2").value = farmer.LastName;
+                document.getElementById("txtEmailAddress2").value = farmer.EmailAddress;
+                document.getElementById("txtCellphoneNumber2").value = farmer.CellphoneNumber;
+
+                let gender = farmer.Gender;
+
+                if (gender == "M") {
+                    document.getElementById("rbMale2").checked = true;
+                }
+
+                if (gender == "F") {
+                    document.getElementById("rbFemale2").checked = true;
+                }
+
+                document.getElementById("txtUserName2").value = farmer.UserName;
+            }
+        }
+
     </script>
 
 }
 
+@foreach(var farmer in this.Model)
+{
+    string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(farmer);
+
+    <input type="hidden" value="@jsonData" id="FARMER-@farmer.FarmerID" />
+}
+
 <div style="margin-top: 16px;">
     <div class="content">
-        <h1 style="background-color: black; width: fit-content">Manage Farmers</h1>
+        <h1 style="background-color: white; color: black; width: fit-content; padding: 4px; border-radius: 8px">Manage Farmers</h1>
 
-        <div style="width: 100%; background-color: white; border-radius: 8px; padding: 16px">
+        <div style="width: 100%; background-color: #FAFAFA; border-radius: 8px; padding: 16px; margin-top: 16px">
 
             <button class="btn-class btn-small" onclick="AddFarmer()">Add Farmer</button>
             <button class="btn-class btn-small" onclick="RemoveFarmer()">Remove Farmer</button>
@@ -215,57 +259,68 @@
             <div id="add-farmer" hidden>
                 
                 <div style="width: fit-content; color: black">
-                    <table style="width: 100%">
+
+                    <h4>Add Farmer</h4>
+
+                    <p>
+                        Please complete all the required fields to add the new farmer.
+                    </p>
+
+                    <table style="width: 430px" cellpadding="4">
 
                         <tr>
-                            <th>First Name:</th>
-                            <td><input id="txtFirstName" type="text" value="" /></td>
+                            <th>First Name: *</th>
+                            <td><input id="txtFirstName" type="text" value="" style="width: 100%" /></td>
                         </tr>
                         <tr>
-                            <th>Last Name:</th>
-                            <td><input id="txtLastName" type="text" value="" /></td>
+                            <th>Last Name: *</th>
+                            <td><input id="txtLastName" type="text" value="" style="width: 100%" /></td>
                         </tr>
                         <tr>
-                            <th>Email Address:</th>
-                            <td><input id="txtEmailAddress" type="email" value="" /></td>
+                            <th>Email Address: *</th>
+                            <td><input id="txtEmailAddress" type="email" value="" style="width: 100%" /></td>
                         </tr>
                         <tr>
-                            <th>Cellphone Number:</th>
-                            <td><input id="txtCellphoneNumber" type="text" value="" /></td>
+                            <th>Cellphone Number: *</th>
+                            <td><input id="txtCellphoneNumber" type="text" value="" style="width: 100%" /></td>
                         </tr>
                         <tr>
-                            <th>Gender:</th>
-                            <td><input id="rbMale" type="radio" onclick="rbMale_onclick()" /> Male <input id="rbFemale" type="radio" onclick="rbFemale_onclick()" /> Female</td>
+                            <th>Gender: *</th>
+                            <td align="right"><input id="rbMale" type="radio" onclick="rbMale_onclick()" /> Male <input id="rbFemale" type="radio" onclick="rbFemale_onclick()" /> Female</td>
                         </tr>
                         <tr>
-                            <th>UserName:</th>
-                            <td><input id="txtUserName" type="text" value="" /></td>
+                            <th>UserName: *</th>
+                            <td><input id="txtUserName" type="text" value="" style="width: 100%" /></td>
                         </tr>
                         <tr>
-                            <th>Password:</th>
-                            <td><input id="txtPassword" type="password" value="" /></td>
+                            <th>Password: *</th>
+                            <td><input id="txtPassword" type="password" value="" style="width: 100%" /></td>
                         </tr>
                         <tr>
-                            <th>Re-enter Password:</th>
-                            <td><input id="txtConfirmPassword" type="password" value="" /></td>
+                            <th>Re-enter Password: *</th>
+                            <td><input id="txtConfirmPassword" type="password" value="" style="width: 100%" /></td>
                         </tr>
                     </table>
-                    <div align="right" style="width: 410px">
-                        <button onclick="SubmitFarmerReg()">Submit</button>
-                        <button onclick="CancelFarmerReg()">Cancel</button>
+                    <div align="right" style="margin-top: 16px">
+                        <button class="btn-class2" onclick="SubmitFarmerReg()">Submit</button>
+                        <button class="btn-class2" onclick="CancelFarmerReg()">Cancel</button>
                     </div>
-
-                    <hr style="color: #333333; height: 3px" />
                 </div>
+
+                <hr style="color: #333333; height: 3px" />
             </div>
 
             <div id="remove-farmer" hidden>
 
                <div style="width: fit-content; color: black">
-                   Please enter a farmer ID to continue.<br />
-                   <b>Farmer ID: </b>
 
-                    <select id="farmerID">
+                   <h4>Remove Farmer</h4>
+
+                   Please select a farmer ID to continue:<br />
+                   <br />
+                   <b>Farmer ID: *</b>
+
+                    <select id="farmerID" style="margin-left: 100px; width: 160px" onclick="SelectFarmer()">
                         
                         <!-- Iterate through the collection -->
                         @foreach (var farmer in this.Model)
@@ -276,26 +331,29 @@
                     </select>
 
                    <br />
+                   <br />
                    <div align="right">
-                       <button onclick="RequestFarmerRemoval()">Remove</button>
-                       <button onclick="CancelFarmerRemoval()">Cancel</button>
+                       <button class="btn-class2" onclick="RequestFarmerRemoval()">Remove</button>
+                       <button class="btn-class2" onclick="CancelFarmerRemoval()">Cancel</button>
                    </div>
-
-                    <hr style="color: #333333; height: 3px" />
                </div>
-
+                <hr style="color: #333333; height: 3px" />
             </div>
 
             <div id="update-farmer" hidden>
 
                 <div style="width: fit-content; color: black">
+
+                    <h4>Update Farmer</h4>
+
+                    <p>Click the Submit button to begin the update process.</p>
                     
-                    <table style="width: 100%">
+                    <table style="width: 430px" cellpadding="4">
 
                         <tr>
-                            <th>Farmer ID</th>
+                            <th>Farmer ID: *</th>
                             <td>
-                                <select id="farmerID2">
+                                <select id="farmerID2" style="width: 100%" onchange="SelectFarmer()">
 
                                     <!-- Iterate through the collection -->
                                     @foreach(var farmer in this.Model)
@@ -307,40 +365,44 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>First Name:</th>
-                            <td><input id="txtFirstName2" type="text" value="" /></td>
+                            <th>First Name: *</th>
+                            <td><input id="txtFirstName2" type="text" value="" style="width: 100%" /></td>
                         </tr>
                         <tr>
-                            <th>Last Name:</th>
-                            <td><input id="txtLastName2" type="text" value="" /></td>
+                            <th>Last Name: *</th>
+                            <td><input id="txtLastName2" type="text" value="" style="width: 100%" /></td>
                         </tr>
                         <tr>
-                            <th>Email Address:</th>
-                            <td><input id="txtEmailAddress2" type="text" value="" /></td>
+                            <th>Email Address: *</th>
+                            <td><input id="txtEmailAddress2" type="text" value="" style="width: 100%" /></td>
                         </tr>
                         <tr>
-                            <th>Cellphone Number:</th>
-                            <td><input id="txtCellphoneNumber2" type="text" value="" /></td>
+                            <th>Cellphone Number: *</th>
+                            <td><input id="txtCellphoneNumber2" type="text" value="" style="width: 100%" /></td>
                         </tr>
                         <tr>
-                            <th>Gender:</th>
-                            <td><input id="rbMale2"" type="radio" onclick="rbMale2_onclick()" /> Male <input id="rbFemale2" type="radio" onclick="rbFemale2_onclick()" /> Female</td>
+                            <th>Gender: *</th>
+                            <td align="right"><input id="rbMale2" type="radio" onclick="rbMale2_onclick()" /> Male <input id="rbFemale2" type="radio" onclick="rbFemale2_onclick()" /> Female</td>
                         </tr>
                         <tr>
-                            <th>UserName:</th>
-                            <td><input id="txtUserName2" type="text" value="" /></td>
+                            <th>UserName: *</th>
+                            <td><input id="txtUserName2" type="text" value="" style="width: 100%" /></td>
                         </tr>
                     </table>
-                    <div align="right">
-                        <button onclick="UpdateFarmerInfo()">Submit</button>
-                        <button onclick="CancelUpdate()">Cancel</button>
+                    <div align="right" style="margin-top: 16px">
+                        <button class="btn-class2" onclick="UpdateFarmerInfo()">Submit</button>
+                        <button class="btn-class2" onclick="CancelUpdate()">Cancel</button>
                     </div>
-
-                    <hr style="color: #333333; height: 3px" />
-
                 </div>
 
+                <hr style="color: #333333; height: 3px" />
+
             </div>
+
+            <div align="center" style="color: black">
+                <h4>Farmers from Agri-Energy Connect</h4>
+            </div>
+            <hr style="color: #333333; height: 3px" />
 
 
             <table style="width: 100%; color: black" cellpadding="4">
