@@ -10,6 +10,7 @@ namespace AgriEnergyConnect.Models.Serializables
     public class Product
     {
         // Automatic Properties
+        public string? FarmerID { get; set; }
         public string? Name { get; set; }
         public string? Category { get; set; }
         public string? ProductionDate { get; set; }

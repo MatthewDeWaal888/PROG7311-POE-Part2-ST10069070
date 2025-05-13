@@ -1,5 +1,6 @@
 ﻿using AgriEnergyConnect.Models;
 using AgriEnergyConnect.Models.Serializables;
+using AgriEnergyConnect.Models.Tables;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Reflection;
@@ -169,48 +170,72 @@ namespace AgriEnergyConnect.Controllers
             // Check if the URL has parameters.
             if (query.Count > 0)
             {
-                // Iterate through the Product collection.
-                foreach (var product in _context.Product)
-                {
-                    // Check if the URL contains the 'ProductName' parameter.
-                    if (query.ContainsKey("ProductName") && product.Name.ToLower().Contains(query["ProductName"].ToString().ToLower()))
-                    {
-                        results.Add(product);
-                    }
-                    // Check if the URL contains the 'ProductCategory' parameter.
-                    else if (query.ContainsKey("ProductCategory") && product.Category.ToLower().Contains(query["ProductCategory"].ToString().ToLower()))
-                    {
-                        results.Add(product);
-                    }
-                    // Check if the URL contains the 'ProductionDate' parameter.
-                    else if (query.ContainsKey("ProductionDate"))
-                    {
-                        // Check if the ProductionDate filter contains a date range.
-                        if (query["ProductionDate"].ToString().Contains(";"))
-                        {
-                            // Get the parts of the date range.
-                            string[] parts = query["ProductionDate"].ToString().Split(';');
+                // Declare a ProductTable object.
+                ProductTable[]? products = null;
 
-                            // Check if the array contains two parts and if the two parts can be parsed to a DateTime object.
-                            if (parts.Count() == 2 && DateTime.TryParse(parts[0], out DateTime part1) && DateTime.TryParse(parts[1], out DateTime part2))
-                            {
-                                // Check if the ProductionDate of the product variable is within the date range.
-                                if(product.ProductionDate >= part1 && product.ProductionDate <= part2)
-                                {
-                                    results.Add(product);
-                                }
-                            }
-                        }
-                        // The ProductionDate filter does not contain a date range.
-                        else if (DateTime.TryParse(query["ProductionDate"].ToString(), out DateTime d) && containsDateTime(product.ProductionDate, d, query["ProductionDate"].ToString().Contains("/"), query["ProductionDate"].ToString().Contains(":")))
+                // Check if the query contains the parameter 'FarmerID'.
+                if (query.ContainsKey("FarmerID"))
+                {
+                    // Filter all products for a specific farmer.
+                    int farmerId = Convert.ToInt32(query["FarmerID"]);
+                    products = _context.Product.Where(p => p.FarmerID == farmerId).ToArray();
+                }
+                else
+                {
+                    // Filter all products for all farmers.
+                    products = _context.Product.ToArray();
+                }
+
+                // Check if the query only contains the 'FarmerID' parameter.
+                if (query.ContainsKey("FarmerID") && query.Count == 1)
+                {
+                    results.AddRange(products);
+                }
+                else
+                {
+                    // Iterate through the Product collection.
+                    foreach (var product in products)
+                    {
+                        // Check if the URL contains the 'ProductName' parameter.
+                        if (query.ContainsKey("ProductName") && product.Name.ToLower().Contains(query["ProductName"].ToString().ToLower()))
                         {
                             results.Add(product);
                         }
-                    }
-                    // Check if the URL contains the 'ProductType' parameter.
-                    else if (query.ContainsKey("ProductType") && product.ProductType.ToLower().Contains(query["ProductType"].ToString().ToLower()))
-                    {
-                        results.Add(product);
+                        // Check if the URL contains the 'ProductCategory' parameter.
+                        else if (query.ContainsKey("ProductCategory") && product.Category.ToLower().Contains(query["ProductCategory"].ToString().ToLower()))
+                        {
+                            results.Add(product);
+                        }
+                        // Check if the URL contains the 'ProductionDate' parameter.
+                        else if (query.ContainsKey("ProductionDate"))
+                        {
+                            // Check if the ProductionDate filter contains a date range.
+                            if (query["ProductionDate"].ToString().Contains(";"))
+                            {
+                                // Get the parts of the date range.
+                                string[] parts = query["ProductionDate"].ToString().Split(';');
+
+                                // Check if the array contains two parts and if the two parts can be parsed to a DateTime object.
+                                if (parts.Count() == 2 && DateTime.TryParse(parts[0], out DateTime part1) && DateTime.TryParse(parts[1], out DateTime part2))
+                                {
+                                    // Check if the ProductionDate of the product variable is within the date range.
+                                    if (product.ProductionDate >= part1 && product.ProductionDate <= part2)
+                                    {
+                                        results.Add(product);
+                                    }
+                                }
+                            }
+                            // The ProductionDate filter does not contain a date range.
+                            else if (DateTime.TryParse(query["ProductionDate"].ToString(), out DateTime d) && containsDateTime(product.ProductionDate, d, query["ProductionDate"].ToString().Contains("/"), query["ProductionDate"].ToString().Contains(":")))
+                            {
+                                results.Add(product);
+                            }
+                        }
+                        // Check if the URL contains the 'ProductType' parameter.
+                        else if (query.ContainsKey("ProductType") && product.ProductType.ToLower().Contains(query["ProductType"].ToString().ToLower()))
+                        {
+                            results.Add(product);
+                        }
                     }
                 }
             }

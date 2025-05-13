@@ -128,7 +128,12 @@
         }
 
         // Occurs when the user clicked the 'Submit' button.
-        function SubmitFilter() { 
+        function SubmitFilter(mode) { 
+        let farmerId = EMPTY_STRING;
+        
+        if(mode == 1)
+            farmerId = document.getElementById("txtFarmerID").value;
+        
         // Obtain the field data.
         let productName = document.getElementById("txtProductName2").value;
         let productCategory = document.getElementById("txtCategory2").value;
@@ -138,6 +143,12 @@
         // Declare a query string.
         let queryString = EMPTY_STRING;
         let containsField = false;
+
+        if(farmerId.length > 0 && mode == 1)
+        {
+            queryString += "&FarmerID=" + farmerId;
+            containsField = true;
+        }
 
         if(productName.length > 0)
         {
@@ -227,6 +238,10 @@
                         <table style="width: 430px" cellpadding="4">
 
                             <tr>
+                                <th>Farmer ID:</th>
+                                <td><input id="txtFarmerID" type="text" value="" style="width: 100%" /></td>
+                            </tr>
+                            <tr>
                                 <th>Name:</th>
                                 <td><input id="txtProductName2" type="text" value="" style="width: 100%" /></td>
                             </tr>
@@ -244,7 +259,7 @@
                             </tr>
                         </table>
                         <div align="right" style="margin-top: 16px">
-                            <button class="btn-class2" onclick="SubmitFilter()">Submit</button>
+                            <button class="btn-class2" onclick="SubmitFilter(1)">Submit</button>
                             <button class="btn-class2" onclick="CancelFilter()">Cancel</button>
                         </div>
 
@@ -273,6 +288,7 @@
                                 <th>Production Date</th>
                                 <th>Type</th>
                                 <th>Farmer</th>
+                                <th>Farmer ID</th>
                             </tr>
 
                         <!-- Iterate through the collection. -->
@@ -286,6 +302,7 @@
                                 <td>@product.ProductionDate</td>
                                 <td>@product.ProductType</td>
                                 <td>@farmer.FirstName @farmer.LastName</td>
+                                <td>@farmer.FarmerID</td>
                             </tr>
                         }
 
@@ -411,7 +428,7 @@
                             </tr>
                         </table>
                         <div align="right" style="margin-top: 16px">
-                            <button class="btn-class2" onclick="SubmitFilter()">Submit</button>
+                            <button class="btn-class2" onclick="SubmitFilter(2)">Submit</button>
                             <button class="btn-class2" onclick="CancelFilter()">Cancel</button>
                         </div>
 
