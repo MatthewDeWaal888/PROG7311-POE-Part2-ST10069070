@@ -3,7 +3,7 @@
 
 **Student Number:** ST10069070
 
-**Module:** Programming 3C
+**Module:** Programming 3A
 
 **Written in:** C# (Visual Studio)
 
