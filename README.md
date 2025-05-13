@@ -7,6 +7,8 @@
 
 **Written in:** C# (Visual Studio)
 
+**Note:** This README file will show you how to set up the development environment for the Agri-Energy Connect platform and how to build and launch the system.
+
 ### Development Environment
 This section will show you how to set up the development environment with Visual Studio.
 
@@ -23,4 +25,6 @@ The Agri-Energy Connect platform supports two types of users who are Employees a
 
 The platform also comes with a discussion board to allow farmers, green-energy experts and enthuasiats to share ideas and collaborate with each other. You can submit a discussion anonymously or you can submit discussions with your user account. The homepage includes a slide-show which displays images in sequence, repeatedly. In order to view data from the Agri-Energy Connect platform, you must first be logged in to your user account. You can create a new user account by clicking on the Register link. When registering, you must provide a strong password with a minimum of four alphabetical letters, two numerical digits and two special symbols. Password Example: **abcd12!@**, this password includes four alphabetical letters, two numerical digits and two special symbols.
 
-On the Products page, you can expand or collpase different products that a farmer owns. Click on the Plus icon to expand the view or click on the Minus icon to collapse the view.
+On the Products page, you can expand or collpase different products that a farmer owns. Click on the Plus icon to expand the view or click on the Minus icon to collapse the view. On the ManageFarmers page, you can add, remove and update farmer details. You will see a list of all the farmers from Agri-Energy Connect.
+
+You can sign-out of your user account by clicking on the Sign-Out link at the top right corner of the webpage. You can also Login or Register by clicking on the links at the top right corner of the webpage.
