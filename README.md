@@ -28,3 +28,6 @@ The platform also comes with a discussion board to allow farmers, green-energy e
 On the Products page, you can expand or collpase different products that a farmer owns. Click on the Plus icon to expand the view or click on the Minus icon to collapse the view. On the ManageFarmers page, you can add, remove and update farmer details. You will see a list of all the farmers from Agri-Energy Connect.
 
 You can sign-out of your user account by clicking on the Sign-Out link at the top right corner of the webpage. You can also Login or Register by clicking on the links at the top right corner of the webpage.
+
+### Screenshots of Agri-Energy Connect platform
+![Alt text](readme_img/screenshot-1.png)
