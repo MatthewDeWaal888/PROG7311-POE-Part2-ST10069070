@@ -30,4 +30,37 @@ On the Products page, you can expand or collpase different products that a farme
 You can sign-out of your user account by clicking on the Sign-Out link at the top right corner of the webpage. You can also Login or Register by clicking on the links at the top right corner of the webpage.
 
 ### Screenshots of Agri-Energy Connect platform
-![Alt text](readme_img/screenshot-1.png)
+**Homepage**
+
+This is the official landing page for Agri-Energy Connect.
+![Homepage](readme_img/screenshot-1.png)
+
+**Login page**
+
+This is the authentication page that will allow employees and farmers to login.
+![Login](readme_img/screenshot-2.png)
+
+**Forum page**
+
+Employees, Farmers and anonymous users can collaborate on this page.
+![Forum](readme_img/screenshot-3.png)
+
+**Register page**
+
+This page is only for Employees to register.
+![Forum](readme_img/screenshot-4.png)
+
+**Status page**
+
+This page shows the status of any operation with Agri-Energy Connect.
+![Status](readme_img/screenshot-5.png)
+
+**Product page**
+
+Employees and Farmers can view the products from Agri-Energy Connect.
+![Product](readme_img/screenshot-6.png)
+
+**Manage Farmers page**
+
+Only Employees have permission to this page. This page allows Employees to add, remove and update farmer details.
+![Manage Farmers](readme_img/screenshot-7.png)
