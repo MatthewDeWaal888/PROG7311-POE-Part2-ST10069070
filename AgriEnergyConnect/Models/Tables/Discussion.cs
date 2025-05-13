@@ -9,7 +9,7 @@ namespace AgriEnergyConnect.Models.Tables
     {
         // Automatic Properties
         [Key]
-        public int DiscussionId { get; set; }
+        public int DiscussionID { get; set; }
         public string? Content { get; set; }
         [StringLength(120)]
         public string? UserName { get; set; }
