@@ -16,9 +16,9 @@ This section will show you how to set up the development environment with Visual
 
 **Step 2:** Open this project with Visual Studio.
 
-**Step 3:** This project uses Entity Framework Core as its local database. You must run the following command to create the database on your device. Enter this command in the Package Manager Console: **update-database AgriEnergyConnect_ST10069070**. This will create the database to your local device. Open SQL-Server Object Explorer to view the database. The database will be pre-populated with data to use.
+**Step 3:** This project uses Entity Framework Core on a SQLite database. You must run the following command to create the database on your device. Enter this command in the Package Manager Console: **update-database AgriEnergyConnect_ST10069070**. This will create the database to your local device. Use any SQLite Database Management System to view the database. The name of the SQLite database is **AgriEnergyConnectDB.db**. The database will be pre-populated with data to use. An example of a SQLite Database Management System is **SQLite Studio**. You can download the program here: <https://sqlitestudio.pl/>
 
-**Step 4:** In Visual Studio, you can build and run the project by clicking on the green arrow button. You can use **https** or **IIS Express** when running the web application. The recommended option to use is **IIS Express**.
+**Step 4:** In Visual Studio, you can build and run the project by clicking on the green arrow button.
 
 ### System Functionalities and User Roles
 The Agri-Energy Connect platform supports two types of users who are Employees and Farmers. An Employee has more priviledges than a Farmer and they can add Farmer profiles to the system. A Farmer cannot create his/her own profile, they require the Employee's permission to create their user account. Farmers can add their own products and Employees can view all products from specific Farmers. Employees and Farmers can perform filtering operations to find specific products from the database. You can filter products according to the Production Date. You can input a single **date and time** value for the Production Date. You can also perform a date range by providing two **date and time** values. To perform a date range, enter the start **date and time** and end **date and time**, seperated by a semi-colon. For example: **2025/02/02 00:00:00;2025/05/05 00:00:00** You can either provide the date or time only. It does not have to be together in the Production Date field.
@@ -28,6 +28,30 @@ The platform also comes with a discussion board to allow farmers, green-energy e
 On the Products page, you can expand or collpase different products that a farmer owns. Click on the Plus icon to expand the view or click on the Minus icon to collapse the view. On the ManageFarmers page, you can add, remove and update farmer details. You will see a list of all the farmers from Agri-Energy Connect.
 
 You can sign-out of your user account by clicking on the Sign-Out link at the top right corner of the webpage. You can also Login or Register by clicking on the links at the top right corner of the webpage.
+
+### Test Data for Agri-Energy Connect
+This section provides test data for the Agri-Energy Connect platform.
+
+**Test Data for Employee/Farmer Registration**
+|Field Name|Value|
+|----------|-----|
+|First Name|John|
+|Last Name|Lucas|
+|Email Address|john@example.com|
+|Cellphone Number|123456789|
+|Gender|M|
+|UserName|John5|
+|Password|abcd12!@|
+|Confirm Password|abcd12!@|
+
+**Test Data for filtering products**
+|Field Name|Value|
+|----------|-----|
+|Farmer ID|1|
+|Name|Milk|
+|Category|Dairy|
+|Production Date|2025/01/01 00:00:00|
+|Product Type|Dairy Product|
 
 ### Screenshots of Agri-Energy Connect platform
 **Homepage**
