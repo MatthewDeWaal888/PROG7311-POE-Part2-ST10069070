@@ -29,6 +29,30 @@ On the Products page, you can expand or collpase different products that a farme
 
 You can sign-out of your user account by clicking on the Sign-Out link at the top right corner of the webpage. You can also Login or Register by clicking on the links at the top right corner of the webpage.
 
+### Test Data for Agri-Energy Connect
+This section provides test data for the Agri-Energy Connect platform.
+
+**Test Data for Employee/Farmer Registration**
+|Field Name|Value|
+|----------|-----|
+|First Name|John|
+|Last Name|Lucas|
+|Email Address|john@example.com|
+|Cellphone Number|123456789|
+|Gender|M|
+|UserName|John5|
+|Password|abcd12!@|
+|Confirm Password|abcd12!@|
+
+**Test Data for filtering products**
+|Field Name|Value|
+|----------|-----|
+|Farmer ID|1|
+|Name|Milk|
+|Category|Dairy|
+|Production Date|2025/01/01 00:00:00|
+|Product Type|Dairy Product|
+
 ### Screenshots of Agri-Energy Connect platform
 **Homepage**
 
