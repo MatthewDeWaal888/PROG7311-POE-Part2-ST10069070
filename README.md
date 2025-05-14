@@ -16,7 +16,7 @@ This section will show you how to set up the development environment with Visual
 
 **Step 2:** Open this project with Visual Studio.
 
-**Step 3:** This project uses Entity Framework Core as its local database. You must run the following command to create the database on your device. Enter this command in the Package Manager Console: **update-database AgriEnergyConnect_ST10069070**. This will create the database to your local device. Open SQL-Server Object Explorer to view the database. The database will be pre-populated with data to use.
+**Step 3:** This project uses Entity Framework Core on a SQLite database. You must run the following command to create the database on your device. Enter this command in the Package Manager Console: **update-database AgriEnergyConnect_ST10069070**. This will create the database to your local device. Use any SQLite Database Management System to view the database. The database will be pre-populated with data to use.
 
 **Step 4:** In Visual Studio, you can build and run the project by clicking on the green arrow button. You can use **https** or **IIS Express** when running the web application. The recommended option to use is **IIS Express**.
 
