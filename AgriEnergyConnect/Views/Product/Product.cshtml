@@ -282,7 +282,7 @@
                                 <tr>
                                     <td>@product.Name</td>
                                     <td>@product.Category</td>
-                                    <td>@product.ProductionDate</td>
+                                    <td>@product.ProductionDate?.ToString("yyyy/MM/dd HH:mm:ss")</td>
                                     <td>@product.ProductType</td>
                                     <td>@farmer.FirstName @farmer.LastName</td>
                                     <td>@farmer.FarmerID</td>
@@ -443,7 +443,7 @@
                         <tr>
                             <td>@product.Name</td>
                             <td>@product.Category</td>
-                            <td>@product.ProductionDate</td>
+                            <td>@product.ProductionDate?.ToString("yyyy/MM/dd HH:mm:ss")</td>
                             <td>@product.ProductType</td>
                             <td>@farmer.FirstName @farmer.LastName</td>
                         </tr>

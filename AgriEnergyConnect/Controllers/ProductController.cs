@@ -134,7 +134,7 @@ namespace AgriEnergyConnect.Controllers
             bool containsDateTime(DateTime? dt1, DateTime? dt2, bool dateIncluded, bool timeIncluded)
             {
                 // The full date-time of dt1.
-                string? dt1Str = dt1?.ToString();
+                string? dt1Str = dt1?.ToString("yyyy/MM/dd HH:mm:ss");
 
                 // The date part of dt2.
                 string? dt2DateStr = dt2?.ToString("yyyy/MM/dd");
